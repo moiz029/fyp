@@ -13,16 +13,23 @@ import allRounders from './PlayingXIModule/allRounders';
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
-const nestedScreens = () =>{
+const PlayingIXScreens = () =>{
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Batsmen" component={batsmen}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen name="playingIX" component={playingXI} options={{ headerShown: false}}/>
+      <Stack.Screen name="Batsmen" component={batsmen} options={{ headerShown: false}}/>
+      <Stack.Screen name="Bowler" component={bowlers} options={{ headerShown: false}}/>
+      <Stack.Screen name="AllRounder" component={allRounders} options={{ headerShown: false}}/>
+    </Stack.Navigator>
   );
+}
+const ComprisonScreens = () =>{
+  return (    
+    <Stack.Navigator>
+      <Stack.Screen name="Player Select" component={Selection} options={{ headerShown: false}}/>
+      <Stack.Screen name="Compare" component={Compare} options={{ headerShown: false}}/>
+    </Stack.Navigator>
+  )
 }
 
 
@@ -30,13 +37,9 @@ const nestedScreens = () =>{
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Covid-Stats">
-        <Drawer.Screen name="Select Players for Comparison" component={Selection} />
-        <Drawer.Screen name="Comparison" component={Compare} />
-        <Drawer.Screen name="PlayingXI" component={playingXI} />
-        <Drawer.Screen name="Batsmen" component={batsmen} />
-        <Drawer.Screen name="Bowlers" component={bowlers} />
-        <Drawer.Screen name="AllRounders" component={allRounders} />
+      <Drawer.Navigator>
+        <Drawer.Screen name="Comparison" component={ComprisonScreens} />
+        <Drawer.Screen name="PlayingIX" component={PlayingIXScreens} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

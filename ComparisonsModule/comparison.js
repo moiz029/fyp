@@ -2,12 +2,11 @@ import { StyleSheet, Text, View, TouchableOpacity, Picker, ImageBackground, Flat
 import {useState} from 'react';
 
 export default function Compare({ route, navigation }) {
-    const [player1,setPlayer1] = useState({name:'BEN STOKES', country:'ENGLAND', innings:110, iccRanking:25, runs:4500, avg:69.3, strikeRate:98, hundreds:15, fifties:6, highest:137})
-    const [player2,setPlayer2] = useState({name:'BABAR AZAM', country:'Pakistan', innings:80, iccRanking:1, runs:3300, avg:48.5, strikeRate:100.5, hundreds:5, fifties:12, highest:125})
-    //const [player1,setPlayer1] = useState(['BEN STOKES', 'ENGLAND', 110, 25, 4500, 69.3, 98, 15, 6, 137])
-    //const [player2,setPlayer2] = useState(['BABAR AZAM', 'Pakistan', 80, 1, 48.5, 100.5, 5, 12, 125])
-    //const [stats,setStats] = useState(['NAME','COUNTRY','INNINGS','ICC RANKING','RUNS','AVG','STRIKE RATE','HUNDREDS','FIFTIES','HIGHEST'])
+    // const [player1,setPlayer1] = useState({name:'BEN STOKES', country:'ENGLAND', innings:110, iccRanking:25, runs:4500, avg:69.3, strikeRate:98, hundreds:15, fifties:6, highest:137})
+    // const [player2,setPlayer2] = useState({name:'BABAR AZAM', country:'Pakistan', innings:80, iccRanking:1, runs:3300, avg:48.5, strikeRate:100.5, hundreds:5, fifties:12, highest:125})
     
+    var player1 = route.params.player1
+    var player2 = route.params.player2
     return(
         <View style={styles.container}>
             <ImageBackground source={require('../assets/stadium.jpg')} resizeMode="cover" style={styles.image}>
@@ -16,12 +15,12 @@ export default function Compare({ route, navigation }) {
             <View style = {{flexDirection: 'row', margin: 10}}>
                 
                 <TouchableOpacity style = {styles.tile2}>
-                <Image source= {require('../assets/benStokes.jpg')} style = {styles.thumbnail} />
+                <Image source= {player1.picSource} style = {styles.thumbnail} />
                     <Text style = {styles.text3}>{player1.name}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style = {styles.tile2}>
-                    <Image source= {require('../assets/babarAzam.jpg')} style = {styles.thumbnail} />
+                    <Image source= {player2.picSource} style = {styles.thumbnail} />
                     <Text style = {styles.text3}>{player2.name}</Text>
                 </TouchableOpacity>
             
@@ -180,7 +179,6 @@ const styles = StyleSheet.create({
     text3: {
         color: "white",
         fontSize: 22,
-        lineHeight: 42,
         fontWeight: "bold",
         textAlign: "center"
       },
