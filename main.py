@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/allplayers")
 def hello_world():
-    return {'players':"Players stats"}
+    return jsonify({'players':"Players stats"})
 
 @app.route("/getPlayer/<string:playerid>")
 def checking(playerid):
