@@ -10,7 +10,7 @@ def hello_world():
 
 @app.route("/getPlayer/<string:playerid>")
 def checking(playerid):
-    return jsonify(extract_player_stats.player_id(playerid))
+    return jsonify(extract_player_stats.player_details(playerid))
 
 
 if __name__ == "__main__":
