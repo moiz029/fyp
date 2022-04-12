@@ -13,7 +13,8 @@ def player_details(id):
 
 def leagues_stats(id):
     webpage = requests.get("http://www.cricmetric.com/playerstats.py?player="+id+"&role=all&format=TWENTY20&groupby=match")
-    soup = BeautifulSoup(webpage.content, 'html.parser')
+    webpage = str(webpage.content).replace("</td><tr>","</td></tr><tr>").replace("</td><tfoot>","</td></tr><tfoot>")
+    soup = BeautifulSoup(webpage, 'html.parser')
     tables = soup.find_all('table',{'class':'table scoretable'})
     headers = []
     for table in tables:
@@ -78,20 +79,29 @@ def date_and_venue(link="http://www.cricmetric.com/match/2018_T20_04"):
 
 def stats_management(league_stats,international_stats):
     stats = []
-    if (len(league_stats)==len(international_stats)):
+    if league_stats and international_stats:
+        if (len(league_stats)==len(international_stats)):
+            for i in range(len(league_stats)):
+                stats.append(league_stats[i]+international_stats[i][1:])
+                stats[i][1:] = sorted(stats[i][1:], key=lambda x:datetime.strptime(x[13],"%b %d, %Y"))
+        elif(len(league_stats)>len(international_stats)):
+            stats.append(league_stats[0]+international_stats[0][1:])
+            stats.append(league_stats[1])
+            stats[0][1:] = sorted(stats[0][1:], key=lambda x:datetime.strptime(x[13],"%b %d, %Y"))
+            stats[1][1:] = sorted(stats[1][1:], key=lambda x:datetime.strptime(x[13],"%b %d, %Y"))
+        else:
+            stats.append(league_stats[0]+international_stats[0][1:])
+            stats.append(international_stats[1])
+            stats[0][1:] = sorted(stats[0][1:], key=lambda x:datetime.strptime(x[13],"%b %d, %Y"))
+            stats[1][1:] = sorted(stats[1][1:], key=lambda x:datetime.strptime(x[13],"%b %d, %Y"))
+    elif not league_stats:
+        for i in range(len(international_stats)):
+                stats.append(international_stats[i])
+                stats[i][1:] = sorted(stats[i][1:], key=lambda x:datetime.strptime(x[13],"%b %d, %Y"))
+    elif not international_stats:
         for i in range(len(league_stats)):
-            stats.append(league_stats[i]+international_stats[i][1:])
-            stats[i][1:] = sorted(stats[0][1:], key=lambda x:datetime.strptime(x[13],"%b %d, %Y"))
-    elif(len(league_stats)>len(international_stats)):
-        stats.append(league_stats[0]+international_stats[0][1:])
-        stats.append(league_stats[1])
-        stats[0][1:] = sorted(stats[0][1:], key=lambda x:datetime.strptime(x[13],"%b %d, %Y"))
-        stats[1][1:] = sorted(stats[0][1:], key=lambda x:datetime.strptime(x[13],"%b %d, %Y"))
-    else:
-        stats.append(league_stats[0]+international_stats[0][1:])
-        stats.append(international_stats[1])
-        stats[0][1:] = sorted(stats[0][1:], key=lambda x:datetime.strptime(x[13],"%b %d, %Y"))
-        stats[1][1:] = sorted(stats[0][1:], key=lambda x:datetime.strptime(x[13],"%b %d, %Y"))
+                stats.append(league_stats[i])
+                stats[i][1:] = sorted(stats[i][1:], key=lambda x:datetime.strptime(x[13],"%b %d, %Y"))
     
     return stats
     
