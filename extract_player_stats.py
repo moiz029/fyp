@@ -1,14 +1,16 @@
 from site import venv
+from turtle import position
 from bs4 import BeautifulSoup
 import requests
 from datetime import datetime
 def player_details(id):
-    
     player_stats = stats_management(leagues_stats(id),international_stats(id))
+    postion_records = league_postion_stats(id)
     return {
         "playername":"Stats",
         "playerid": id,
-        "stats": player_stats
+        "stats": player_stats,
+        "position_stats": postion_records
     }
 
 def leagues_stats(id):
@@ -43,7 +45,8 @@ def leagues_stats(id):
 
 def international_stats(id):
     webpage = requests.get("http://www.cricmetric.com/playerstats.py?player="+id+"&role=all&format=T20I&groupby=match")
-    soup = BeautifulSoup(webpage.content, 'html.parser')
+    webpage = str(webpage.content).replace("</td><tr>","</td></tr><tr>").replace("</td><tfoot>","</td></tr><tfoot>")
+    soup = BeautifulSoup(webpage, 'html.parser')
     tables = soup.find_all('table',{'class':'table scoretable'})
     headers = []
     for table in tables:
@@ -69,7 +72,7 @@ def international_stats(id):
         player_stats.append(temp_record)
     return player_stats
 
-def date_and_venue(link="http://www.cricmetric.com/match/2018_T20_04"):
+def date_and_venue(link):
     webpage = requests.get(link)
     soup = BeautifulSoup(webpage.content, 'html.parser')
     details = soup.find('div',{'class':'panel-heading'}).text.strip().split('|')
@@ -106,5 +109,60 @@ def stats_management(league_stats,international_stats):
     return stats
     
     
+def international_postion_stats(id):
+    webpage = requests.get("http://www.cricmetric.com/playerstats.py?player="+id+"&role=all&format=T20I&groupby=batpos")
+    webpage = str(webpage.content).replace("</td><tr>","</td></tr><tr>").replace("</td><tfoot>","</td></tr><tfoot>")
+    soup = BeautifulSoup(webpage, 'html.parser')
+    tables = soup.find_all('table',{'class':'table scoretable'})
+    headers = []
+    for table in tables:
+        header = []
+        for heading in table.find_all('th'):
+            title = heading.text.strip()
+            header.append(title)
+        headers.append(header)
 
-        
+    position_stats = []
+    for index,value in enumerate(tables):
+        temp_record = [headers[index]]
+        for row in value.find_all('tr')[1:-1]:
+            data = row.find_all('td')
+            row_data = [td.text.strip() for td in data]
+            temp_record.append(row_data)
+        position_stats.append(temp_record)
+    return position_stats
+
+def league_postion_stats(id):
+    webpage = requests.get("http://www.cricmetric.com/playerstats.py?player="+id+"&role=all&format=TWENTY20&groupby=batpos")
+    webpage = str(webpage.content).replace("</td><tr>","</td></tr><tr>").replace("</td><tfoot>","</td></tr><tfoot>")
+    soup = BeautifulSoup(webpage, 'html.parser')
+    tables = soup.find_all('table',{'class':'table scoretable'})
+    headers = []
+    for table in tables:
+        header = []
+        for heading in table.find_all('th'):
+            title = heading.text.strip()
+            header.append(title)
+        headers.append(header)
+
+    position_stats = []
+    for index,value in enumerate(tables):
+        temp_record = [headers[index]]
+        for row in value.find_all('tr')[1:-1]:
+            data = row.find_all('td')
+            row_data = [td.text.strip() for td in data]
+            temp_record.append(row_data)
+        position_stats.append(temp_record)
+    return position_stats
+
+def combining_position_stats(league_positions, international_positions):
+    print(league_positions)
+    if league_positions and international_positions:
+        if len(league_positions)==len(international_positions) and len(league_positions)==2:
+            for i in [0,1]:
+                if league_positions[i][0] == "None":
+                    league_positions[i].pop(0)
+                if international_positions[i][0] == "None":
+                    international_positions[i].pop(0)
+                for j in range(1,12):
+                    pass
