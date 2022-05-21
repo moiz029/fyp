@@ -2,6 +2,7 @@ from flask import jsonify
 import flask_pymongo
 import json
 from bson import json_util
+import extract_player_stats
 
 
 try:
@@ -14,12 +15,25 @@ except:
 
 def all_players():
     data = db.players_info.find({})
-    return jsonify(parse_json(data))
+    return parse_json(data)
+
+
+def player_profile(id):
+    data = db.players_info.find({"cricmetric":id})
+    try:
+        return parse_json(data[0])
+    except IndexError:
+        return jsonify({"message": "NOT FOUND"})
 
 
 def player_details(id):
-    data = db.players_info.find({"cricinfo_id":id})
-    return jsonify(parse_json(data[0]))
+    data = db.players_stats.find({"cricmetric":id})
+    try:
+        return parse_json(data[0])
+    except IndexError:
+        player = extract_player_stats.player_details(id)
+        db.players_stats.insert_one(player)
+        return parse_json(player)
 
 
 def parse_json(data):

@@ -3,12 +3,17 @@ from turtle import position
 from bs4 import BeautifulSoup
 import requests
 from datetime import datetime
+import players_data
 def player_details(id):
     player_stats = stats_management(leagues_stats(id),international_stats(id))
     postion_records = league_postion_stats(id)
+    profile = players_data.player_profile(id)
     return {
-        "playername":"Stats",
-        "playerid": id,
+        "playername":profile["name"],
+        "playerid": profile["cricmetric"],
+        "picture":profile["picture"],
+        "country":profile["country"],
+        "role":profile["role"],
         "stats": player_stats,
         "position_stats": postion_records
     }
