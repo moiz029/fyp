@@ -27,7 +27,7 @@ def player_profile(id):
 
 
 def player_details(id):
-    data = db.players_stats.find({"cricmetric":id})
+    data = db.players_stats.find({"playerid":id})
     try:
         return parse_json(data[0])
     except IndexError:

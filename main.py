@@ -17,7 +17,6 @@ def checking(playerid):
 
 @app.route("/check/<string:playerid>")
 def checkplayer(playerid):
-    
     return players_data.player_profile(playerid)["name"]
 
 
