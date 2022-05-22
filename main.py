@@ -1,7 +1,7 @@
 from glob import escape
 from flask import Flask,jsonify
-import extract_player_stats
 import players_data
+import head_to_head
 
 app = Flask(__name__)
 
@@ -11,8 +11,14 @@ def allplayers():
 
 
 @app.route("/getPlayer/<string:playerid>")
-def checking(playerid):
+def players_deatails(playerid):
     return jsonify(players_data.player_details(playerid))
+
+
+@app.route("/head-to-head/<string:batsman>/<string:bowler>")
+def checking(batsman,bowler):
+    return jsonify(head_to_head.head_to_head(batsman,bowler))
+
 
 
 @app.route("/check/<string:playerid>")

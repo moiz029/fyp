@@ -43,7 +43,8 @@ def leagues_stats(id):
             row_data = [td.text.strip() for td in data]
             row_data.append(date)
             row_data.append(venue)
-            temp_record.append(row_data)
+            if(row_data[-2]!="-"):
+                temp_record.append(row_data)
         player_stats.append(temp_record)
     return player_stats
 
@@ -73,16 +74,21 @@ def international_stats(id):
             row_data = [td.text.strip() for td in data]
             row_data.append(date)
             row_data.append(venue)
-            temp_record.append(row_data)
+            if(row_data[-2]!="-"):
+                temp_record.append(row_data)
         player_stats.append(temp_record)
     return player_stats
 
 def date_and_venue(link):
     webpage = requests.get(link)
     soup = BeautifulSoup(webpage.content, 'html.parser')
-    details = soup.find('div',{'class':'panel-heading'}).text.strip().split('|')
-    venue = details[1][1:]
-    date = details[0][-13:-1]
+    try:
+        details = soup.find('div',{'class':'panel-heading'}).text.strip().split('|')
+        venue = details[1][1:]
+        date = details[0][-13:-1]
+    except:
+        venue = "None"
+        date = "-"
     return date,venue
 
 def stats_management(league_stats,international_stats):
@@ -161,13 +167,17 @@ def league_postion_stats(id):
     return position_stats
 
 def combining_position_stats(league_positions, international_positions):
-    print(league_positions)
+    stats = []
     if league_positions and international_positions:
         if len(league_positions)==len(international_positions) and len(league_positions)==2:
             for i in [0,1]:
+                temp_stats = []
                 if league_positions[i][0] == "None":
                     league_positions[i].pop(0)
                 if international_positions[i][0] == "None":
                     international_positions[i].pop(0)
                 for j in range(1,12):
-                    pass
+                    temp_stats.append(league_positions[i]+international_positions[i])
+            stats.append(temp_stats)
+    
+    return stats
