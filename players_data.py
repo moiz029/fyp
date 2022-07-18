@@ -32,7 +32,14 @@ def player_profile(id):
 def player_details(id):
     data = db.players_stats.find({"playerid":id})
     try:
-        return parse_json(data[0])
+        if is_data_upto_date(id,data[0].get('stats')):
+            return parse_json(data[0])
+        else:
+            updated_record = extract_player_stats.update_records(data[0].get('stats'),id)
+            positional_stats = extract_player_stats.combining_position_stats(extract_player_stats.league_postion_stats(id), extract_player_stats.international_postion_stats(id))
+            db.players_stats.find_one_and_update({'playerid': id},{'$set':{'stats': updated_record, 'position_stats': positional_stats}})
+            data = db.players_stats.find({"playerid":id})
+            return parse_json(data[0])
     except IndexError:
         player = extract_player_stats.player_details(id)
         db.players_stats.insert_one(player)
@@ -41,3 +48,31 @@ def player_details(id):
 
 def parse_json(data):
     return json.loads(json_util.dumps(data))
+
+
+def is_data_upto_date(id,stored_stats):
+    number_of_matches = extract_player_stats.number_of_matches(id)
+    if number_of_matches and len(number_of_matches) == 2:
+        if len(stored_stats) == 2:
+            if len(number_of_matches[0]) == len(stored_stats[0]) and len(number_of_matches[1]) == len(stored_stats[1]):
+                return True
+            else:
+                return False
+        else:
+            return False
+    elif number_of_matches and len(number_of_matches) == 1:
+        if len(number_of_matches[0]) == len(stored_stats[0]):
+            return True
+        else:
+            return False
+
+    return False
+
+
+def add_new_player_info(data):
+    player = db.players_info.find({"cricmetric":data['cricmetric']})
+    try:
+        return parse_json(player[0])
+    except IndexError:
+        db.players_info.insert_one(data)
+        return {"message":"Player added successfully"}
