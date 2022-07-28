@@ -5,9 +5,9 @@ import requests
 from datetime import datetime
 import players_data
 def player_details(id):
-    player_stats = stats_management(leagues_stats(id),international_stats(id))
-    postion_records = combining_position_stats(league_postion_stats(id), international_postion_stats(id))
     profile = players_data.player_profile(id)
+    postion_records = combining_position_stats(league_postion_stats(id), international_postion_stats(id),profile["role"])
+    player_stats = stats_management(leagues_stats(id),international_stats(id),profile["role"])
     return {
         "playername":profile["name"],
         "playerid": profile["cricmetric"],
@@ -92,7 +92,12 @@ def date_and_venue(link):
         date = "-"
     return date,venue
 
-def stats_management(league_stats,international_stats):
+def stats_management(league_stats,international_stats,role):
+    if role == "Bowler":
+        if len(league_stats) == 1:
+            league_stats.insert(0,[])
+        if len(international_stats) == 1:
+            international_stats.insert(0,[])
     stats = []
     if league_stats and international_stats:
         if (len(league_stats)==len(international_stats)):
@@ -167,7 +172,12 @@ def league_postion_stats(id):
         position_stats.append(temp_record)
     return position_stats
 
-def combining_position_stats(league_positions, international_positions):
+def combining_position_stats(league_positions, international_positions,role):
+    if role == "Bowler":
+        if len(league_positions) == 1:
+            league_positions.insert(0,[])
+        if len(international_positions) == 1:
+            international_positions.insert(0,[])
     stats = []
     batting = []
     bowling = []
@@ -243,34 +253,34 @@ def combining_position_stats(league_positions, international_positions):
 
 def combining_batting(league, international):
     stats = [league[0]]
-    stats.append(float(league[1])+float(international[1]))
-    stats.append(float(league[2])+float(international[2]))
-    stats.append(float(league[3])+float(international[3]))
-    stats.append(float(league[4])+float(international[4]))
+    stats.append(float(league[1].replace(",",""))+float(international[1].replace(",","")))
+    stats.append(float(league[2].replace(",",""))+float(international[2].replace(",","")))
+    stats.append(float(league[3].replace(",",""))+float(international[3].replace(",","")))
+    stats.append(float(league[4].replace(",",""))+float(international[4].replace(",","")))
     if float(stats[4])==0:
         stats.append('-')
     else:
         stats.append(stats[2]/stats[4])
     stats.append((stats[2]/stats[3])*100)
-    if float(league[7])>float(international[7]):
-        stats.append(float(league[7]))
+    if float(league[7].replace(",",""))>float(international[7].replace(",","")):
+        stats.append(float(league[7].replace(",","")))
     else:
-        stats.append(float(international[7]))
-    stats.append(float(league[8])+float(international[8]))
-    stats.append(float(league[9])+float(international[9]))
-    stats.append(float(league[10])+float(international[10]))
-    stats.append(float(league[11])+float(international[11]))
-    stats.append(((float(league[12])*float(league[3]))+(float(international[12])*float(international[3])))/(float(league[3])+float(international[3])))
+        stats.append(float(international[7].replace(",","")))
+    stats.append(float(league[8].replace(",",""))+float(international[8].replace(",","")))
+    stats.append(float(league[9].replace(",",""))+float(international[9].replace(",","")))
+    stats.append(float(league[10].replace(",",""))+float(international[10].replace(",","")))
+    stats.append(float(league[11].replace(",",""))+float(international[11].replace(",","")))
+    stats.append(((float(league[12].replace(",",""))*float(league[3].replace(",","")))+(float(international[12].replace(",",""))*float(international[3].replace(",",""))))/(float(league[3].replace(",",""))+float(international[3].replace(",",""))))
 
     return stats
 
 def combining_bowling(league,international):
     stats = [league[0]]
-    stats.append(float(league[1])+float(international[1]))
-    balls = (float(league[2])*6)+(float(international[2])*6)
+    stats.append(float(league[1].replace(",",""))+float(international[1].replace(",","")))
+    balls = (float(league[2].replace(",",""))*6)+(float(international[2].replace(",",""))*6)
     stats.append(float(int(balls/6) + .1*(balls%6)))
-    stats.append(float(league[3])+float(international[3]))
-    stats.append(float(league[4])+float(international[4]))
+    stats.append(float(league[3].replace(",",""))+float(international[3].replace(",","")))
+    stats.append(float(league[4].replace(",",""))+float(international[4].replace(",","")))
     stats.append(float(stats[3]/balls))
     if stats[4] == 0:
         stats.append("-")
@@ -280,10 +290,10 @@ def combining_bowling(league,international):
         stats.append("-")
     else:
         stats.append(float(stats[3]/balls))
-    stats.append(float(league[8])+float(international[8]))
-    stats.append(float(league[10])+float(international[10]))
-    stats.append(float(league[11])+float(international[11]))
-    stats.append((((float(league[-1])*float(league[2]))+(float(international[-1])*float(international[2]))))/(float(league[2])+float(international[2])))
+    stats.append(float(league[8].replace(",",""))+float(international[8].replace(",","")))
+    stats.append(float(league[10].replace(",",""))+float(international[10].replace(",","")))
+    stats.append(float(league[11].replace(",",""))+float(international[11].replace(",","")))
+    stats.append((((float(league[-1].replace(",",""))*float(league[2].replace(",","")))+(float(international[-1].replace(",",""))*float(international[2].replace(",","")))))/(float(league[2].replace(",",""))+float(international[2].replace(",",""))))
 
     return stats
 
@@ -373,7 +383,8 @@ def update_records(stored,id):
                     date,venue = date_and_venue(link)
                     row_data.append(date)
                     row_data.append(venue)
-                    stored[index].append(row_data)
+                    if(row_data[-2]!="-"):
+                        stored[index].append(row_data)
                 except:
                     pass
 
@@ -393,7 +404,8 @@ def update_records(stored,id):
                     date,venue = date_and_venue(link)
                     row_data.append(date)
                     row_data.append(venue)
-                    stored[index].append(row_data)
+                    if(row_data[-2]!="-"):
+                        stored[index].append(row_data)
                 except:
                     pass
     stored[0][1:] = sorted(stored[0][1:], key=lambda x:datetime.strptime(x[13],"%b %d, %Y"))

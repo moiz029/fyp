@@ -36,7 +36,7 @@ def player_details(id):
             return parse_json(data[0])
         else:
             updated_record = extract_player_stats.update_records(data[0].get('stats'),id)
-            positional_stats = extract_player_stats.combining_position_stats(extract_player_stats.league_postion_stats(id), extract_player_stats.international_postion_stats(id))
+            positional_stats = extract_player_stats.combining_position_stats(extract_player_stats.league_postion_stats(id), extract_player_stats.international_postion_stats(id),data[0].get('role'))
             db.players_stats.find_one_and_update({'playerid': id},{'$set':{'stats': updated_record, 'position_stats': positional_stats}})
             data = db.players_stats.find({"playerid":id})
             return parse_json(data[0])
