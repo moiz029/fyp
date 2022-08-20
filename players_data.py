@@ -3,6 +3,7 @@ import flask_pymongo
 import json
 from bson import json_util
 import extract_player_stats
+import pre_processing
 
 #Connection with Database
 try:
@@ -76,3 +77,31 @@ def add_new_player_info(data):
     except IndexError:
         db.players_info.insert_one(data)
         return {"message":"Player added successfully"}
+
+
+def fetch_drafting_list(draft_id):
+    draft = db.drafts.find({"draft_id":draft_id})
+    try:
+        return parse_json(draft[0])
+    except IndexError:
+        return False
+
+
+def draft_details(draft_id):
+    players_list = fetch_drafting_list(draft_id)
+    if players_list:
+        players = []
+        for player in players_list['players']:
+            players.append(player['players_id'])
+        
+        players_details = []
+        for player_id in players:
+            details = db.players_stats.find({"playerid":player_id})
+            players_details.append(details[0])
+        
+        summerize_data = pre_processing.summerize_players(players_details)
+        summerize_data = pre_processing.add_prices_to_players(summerize_data,players_list)
+        return summerize_data
+        
+    else:
+        return False
