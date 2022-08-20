@@ -3,7 +3,6 @@ from flask import Flask,jsonify
 from flask import request
 import players_data
 import head_to_head
-import pre_processing
 import user_management
 from flask_cors import CORS
 
@@ -43,11 +42,27 @@ def signUp():
     return jsonify({"message":"Error in signing up franchise"})
 
 
+@app.route("/franchiseLogin", methods = ['POST'])
+def login():
+    login_credentials = request.get_json()
+    login,session_id = user_management.login_franchise(login_credentials)
+    if login:
+        return jsonify(login),{'session_id':session_id}
+    return jsonify({"message":"Error in signing up franchise"})
+
+
 @app.route("/draft_players/<string:draft_id>")
 def draft_players(draft_id):
     players_list = players_data.fetch_drafting_list(draft_id)
-    if players_list:
-        return jsonify(players_list)
+    try:
+        session = request.headers['session']
+        if user_management.verify_franchise_session(session) or user_management.verify_admin_session(session):
+            if players_list:
+                return jsonify(players_list)
+        else:
+            return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
     
     return jsonify({"message":"No such draft exists"})
 
@@ -58,8 +73,14 @@ BELOW ROUTES ARE FOR ADMIN
 '''
 @app.route("/add_new_player", methods = ['POST'])
 def new_player_info():
-    data = request.get_json()
-    return players_data.add_new_player_info(data)
+    try:
+        session = request.headers['session']
+        if user_management.verify_admin_session(session):
+            data = request.get_json()
+            return players_data.add_new_player_info(data)
+        return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
 
 
 #Below route is just for testing purpose and should be eliminated at time of deploy

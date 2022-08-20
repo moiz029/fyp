@@ -1,4 +1,3 @@
-from flask import jsonify
 import flask_pymongo
 import json
 from bson import json_util
@@ -18,15 +17,6 @@ except:
 def all_players():
     data = db.players_info.find({})
     return parse_json(data)
-
-
-#Getting players Profile info from DataBase
-def player_profile(id):
-    data = db.players_info.find({"cricmetric":id})
-    try:
-        return parse_json(data[0])
-    except IndexError:
-        return jsonify({"message": "NOT FOUND"})
 
 
 #Getting players complete info from database if not available then extract it from web
