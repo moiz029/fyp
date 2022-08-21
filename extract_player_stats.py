@@ -1,5 +1,3 @@
-from site import venv
-from turtle import position
 from bs4 import BeautifulSoup
 import requests
 from datetime import datetime

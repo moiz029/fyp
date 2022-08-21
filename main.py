@@ -1,4 +1,3 @@
-from glob import escape
 from flask import Flask,jsonify
 from flask import request
 import players_data
@@ -49,6 +48,13 @@ def login():
     if login:
         return jsonify(login),{'session_id':session_id}
     return jsonify({"message":"Error in signing up franchise"})
+
+
+@app.route("/logout", methods = ['POST'])
+def logout():
+    session_id = request.get_json()['session_id']
+    user_management.logout(session_id)
+    return jsonify({'Message':"Logged out succesfully"})
 
 
 @app.route("/draft_players/<string:draft_id>")

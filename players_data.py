@@ -90,7 +90,7 @@ def draft_details(draft_id):
             players_details.append(details[0])
         
         summerize_data = pre_processing.summerize_players(players_details)
-        summerize_data = pre_processing.add_prices_to_players(summerize_data,players_list)
+        summerize_data = pre_processing.add_draft_details_to_players(summerize_data,players_list)
         return summerize_data
         
     else:

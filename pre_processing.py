@@ -19,10 +19,10 @@ def summerize_players(players):
     return summerized_players
 
 
-def add_prices_to_players(players,draft_list):
+def add_draft_details_to_players(players,draft_list):
     priced_players = []
     for player in players:
-        player['category'],player['price'] = get_player_price(player['playerid'],draft_list)
+        player['category'],player['price'],player['p_type'] = get_draft_details(player['playerid'],draft_list)
         priced_players.append(player)
     
     return priced_players
@@ -131,8 +131,8 @@ def handle_missing_values(values_list):
     return list(map(lambda x: x.replace('-', '0'), values_list))
 
 
-def get_player_price(playerid,draft):
+def get_draft_details(playerid,draft):
     players = draft['players']
     for player in players:
         if player['players_id'] == playerid:
-            return player['category'],player['price']
+            return player['category'],player['price'],player['p_type']

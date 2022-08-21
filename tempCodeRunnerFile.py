@@ -1,1 +1,1 @@
-/add_new_player
+franchiseLogin
