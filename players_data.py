@@ -6,7 +6,11 @@ import pre_processing
 
 #Connection with Database
 try:
-    mongo = flask_pymongo.MongoClient("mongodb://localhost:27017/")
+    #mongo = flask_pymongo.MongoClient("mongodb://localhost:27017/")
+    #db = mongo.my_team
+    
+
+    mongo = flask_pymongo.MongoClient("mongodb://my_team:X3Njg1cRrj9QT5Ks@ac-ga3haug-shard-00-00.59spobs.mongodb.net:27017,ac-ga3haug-shard-00-01.59spobs.mongodb.net:27017,ac-ga3haug-shard-00-02.59spobs.mongodb.net:27017/?ssl=true&replicaSet=atlas-ugvkvk-shard-0&authSource=admin&retryWrites=true&w=majority")
     db = mongo.my_team
     mongo.server_info()
 except:
@@ -35,6 +39,11 @@ def player_details(id):
         player = extract_player_stats.player_details(id)
         db.players_stats.insert_one(player)
         return parse_json(player)
+
+
+def get_player_stats(id):
+    data = db.players_stats.find({"playerid":id})
+    return parse_json(data[0])
 
 
 def parse_json(data):

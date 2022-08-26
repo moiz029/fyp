@@ -1,7 +1,7 @@
 from flask import Flask,jsonify
 from flask import request
 import players_data
-import head_to_head
+import players_comparison
 import user_management
 from flask_cors import CORS
 
@@ -23,9 +23,15 @@ def players_details(playerid):
     return jsonify(players_data.player_details(playerid))
 
 
+@app.route("/compare_players/<string:player1>/<string:player2>")
+def player_comparison(player1,player2):
+    players_details = players_comparison.compare_two_players(player1,player2)
+    return jsonify(players_details)
+
+
 @app.route("/head-to-head/<string:batsman>/<string:bowler>")
 def comparison(batsman,bowler):
-    return jsonify(head_to_head.head_to_head(batsman,bowler))
+    return jsonify(players_comparison.head_to_head(batsman,bowler))
 
 
 
@@ -90,12 +96,10 @@ def new_player_info():
 
 
 #Below route is just for testing purpose and should be eliminated at time of deploy
-@app.route("/check/<string:draft_id>")
-def checkdraft(draft_id):
-    draft_list = players_data.draft_details(draft_id)
-    if draft_list:
-        return jsonify(draft_list)
-    return jsonify({"message":"No such draft exists"})
+@app.route("/check/<string:player1>/<string:player2>")
+def alternates(player1,player2):
+    alternatives = players_comparison.alternative_player(player1,player2)
+    return jsonify(alternatives)
 
 
 if __name__ == "__main__":
