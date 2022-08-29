@@ -6,17 +6,36 @@ def summerize_players(players):
     for player in players:
         current_player = {}
         current_player['playerid'] = player['playerid']
-        #here one hot coding is required for role
-        batting_stats = player['stats'][0][1:]
+        if player['stats'][0]:
+            batting_stats = player['stats'][0][1:]
+        else:
+            batting_stats = []
         current_player = {**current_player, **batting_summary(batting_stats)}
         if len(player['stats']) == 2:
             bowling_stats = player['stats'][1][1:]
             current_player = {**current_player, **bowling_summary(bowling_stats)}
         else:
             current_player = {**current_player, **bowling_summary()}
+        #here one hot coding is required for role
         current_player = {**current_player, **role_specifier(player['role'])}
         summerized_players.append(current_player)
     return summerized_players
+
+
+#Below function only summerize stats of players
+def summerize_stats(player_stats):
+    if player_stats[0]:
+        batting_stats = player_stats[0][1:]
+        summary = {**batting_summary(batting_stats)}
+    else:
+        summary = {**batting_summary([])}
+    if len(player_stats)==2:
+        bowling_stats = player_stats[1][1:]
+        summary = {**summary, **bowling_summary(bowling_stats)}
+    else:
+        summary = {**summary,**bowling_summary()}
+    return summary
+    
 
 
 def add_draft_details_to_players(players,draft_list):
@@ -32,6 +51,7 @@ def add_draft_details_to_players(players,draft_list):
 def batting_summary(batting_stats):
     summary = {}
     if batting_stats:
+        summary['batting_innings'] = len(batting_stats)
         summary['batting_runs'] = int(np.array([float(runs[2]) for runs in batting_stats],dtype=int).sum())
         summary['batting_balls'] = int(np.array([float(balls[3]) for balls in batting_stats],dtype=int).sum())
         outs = int(np.array([outs[4] for outs in batting_stats],dtype=int).sum())
@@ -48,6 +68,7 @@ def batting_summary(batting_stats):
             handled_data = handle_missing_values([dots[12] for dots in batting_stats])
             summary['batting_dots'] = float(np.array(handled_data,dtype=float).mean())
     else:
+        summary['batting_innings'] = 0
         summary['batting_runs']=0
         summary['batting_balls']=0
         summary['batting_avg'] = 0
@@ -63,6 +84,7 @@ def batting_summary(batting_stats):
 def bowling_summary(bowling_stats=[]):
     summary = {}
     if bowling_stats:
+        summary['bowling_innings'] = len(bowling_stats)
         balls = int(np.array([overs_to_balls(balls[2]) for balls in bowling_stats],dtype=int).sum())
         summary['bowling_overs'] = balls_to_overs(balls)
         summary['bowling_runs'] = int(np.array([runs[3] for runs in bowling_stats],dtype=int).sum())
@@ -82,6 +104,7 @@ def bowling_summary(bowling_stats=[]):
             summary['bowling_dots'] = float(np.array(handled_data,dtype=float).mean())
 
     else:
+        summary['bowling_innings'] = 0
         summary['bowling_overs'] = 0
         summary['bowling_runs'] = 0
         summary['bowling_wickets'] = 0

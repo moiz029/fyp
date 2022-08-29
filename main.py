@@ -3,6 +3,7 @@ from flask import request
 import players_data
 import players_comparison
 import user_management
+import external_factors
 from flask_cors import CORS
 
 
@@ -86,7 +87,7 @@ BELOW ROUTES ARE FOR ADMIN
 @app.route("/add_new_player", methods = ['POST'])
 def new_player_info():
     try:
-        session = request.headers['session']
+        session = request.headers['session_id']
         if user_management.verify_admin_session(session):
             data = request.get_json()
             return players_data.add_new_player_info(data)
@@ -95,11 +96,35 @@ def new_player_info():
         return jsonify({"message":"User not authorized for this request"})
 
 
+
+@app.route("/venues")
+def get_venues():
+    try:
+        session = request.headers['session_id']
+        if user_management.verify_admin_session(session):
+            return jsonify(user_management.get_venues())
+        return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
+
+
+@app.route("/add_new_venue", methods = ['POST'])
+def add_new_venue():
+    try:
+        session = request.headers['session_id']
+        if user_management.verify_admin_session(session):
+            data = request.get_json()
+            return user_management.add_new_venue(data)
+        return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
+
+
 #Below route is just for testing purpose and should be eliminated at time of deploy
-@app.route("/check/<string:player1>/<string:player2>")
-def alternates(player1,player2):
-    alternatives = players_comparison.alternative_player(player1,player2)
-    return jsonify(alternatives)
+@app.route("/check/<string:player>")
+def alternates(player):
+    player_stats = players_data.get_player_stats(player)['stats']
+    return jsonify(external_factors.performance_according_to_venue(player_stats,["Multan","Karachi"]))
 
 
 if __name__ == "__main__":
