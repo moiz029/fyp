@@ -6,12 +6,12 @@ import pre_processing
 
 #Connection with Database
 try:
-    #mongo = flask_pymongo.MongoClient("mongodb://localhost:27017/")
-    #db = mongo.my_team
+    mongo = flask_pymongo.MongoClient("mongodb://localhost:27017/")
+    db = mongo.my_team
     
 
-    mongo = flask_pymongo.MongoClient("mongodb://my_team:X3Njg1cRrj9QT5Ks@ac-ga3haug-shard-00-00.59spobs.mongodb.net:27017,ac-ga3haug-shard-00-01.59spobs.mongodb.net:27017,ac-ga3haug-shard-00-02.59spobs.mongodb.net:27017/?ssl=true&replicaSet=atlas-ugvkvk-shard-0&authSource=admin&retryWrites=true&w=majority")
-    db = mongo.my_team
+    #mongo = flask_pymongo.MongoClient("mongodb://my_team:X3Njg1cRrj9QT5Ks@ac-ga3haug-shard-00-00.59spobs.mongodb.net:27017,ac-ga3haug-shard-00-01.59spobs.mongodb.net:27017,ac-ga3haug-shard-00-02.59spobs.mongodb.net:27017/?ssl=true&replicaSet=atlas-ugvkvk-shard-0&authSource=admin&retryWrites=true&w=majority")
+    #db = mongo.my_team
     mongo.server_info()
 except:
     print("Error cannot connect to db")
@@ -39,6 +39,12 @@ def player_details(id):
         player = extract_player_stats.player_details(id)
         db.players_stats.insert_one(player)
         return parse_json(player)
+
+
+
+def player_profile(player_id):
+    data = db.players_info.find({'cricmetric':player_id})
+    return parse_json(data[0])
 
 
 def get_player_stats(id):

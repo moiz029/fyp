@@ -3,7 +3,7 @@ from flask import request
 import players_data
 import players_comparison
 import user_management
-import external_factors
+import draft
 from flask_cors import CORS
 
 
@@ -121,10 +121,10 @@ def add_new_venue():
 
 
 #Below route is just for testing purpose and should be eliminated at time of deploy
-@app.route("/check/<string:player>")
-def alternates(player):
-    player_stats = players_data.get_player_stats(player)['stats']
-    return jsonify(external_factors.performance_according_to_venue(player_stats,["Multan","Karachi"]))
+@app.route("/check/<string:draft_id>")
+def alternates(draft_id):
+    player_stats = players_data.draft_details(draft_id)
+    return jsonify(draft.suggest_players_from_scratch(player_stats))
 
 
 if __name__ == "__main__":
