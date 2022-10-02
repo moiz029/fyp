@@ -17,6 +17,11 @@ except:
 
 
 def signup_new_franchise(franchise_details):
+    franchise_details = franchise_details
+    franchise_details["draft"] = "-"
+    franchise_details["team"] = []
+    franchise_details['captain_id'] = False
+    franchise_details['captains_password'] = False
     db.franchises.insert_one(franchise_details)
     return True
 
@@ -50,6 +55,16 @@ def verify_franchise_session(session_id):
 
     except IndexError:
         return False
+
+
+def franchise_credentials(session_id):
+    session_details = db.sessions.find({'session_id':session_id})
+    try:
+        franchise_id = parse_json(session_details[0])["user_id"]
+        franchise_details  = parse_json(db.franchises.find({'franchise_id':franchise_id})[0])
+        return franchise_details
+    except:
+        return {"message":"Something is wrong with session id"}
 
 
 def verify_admin_session(session_id):

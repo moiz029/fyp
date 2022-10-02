@@ -6,6 +6,8 @@ def summerize_players(players):
     for player in players:
         current_player = {}
         current_player['playerid'] = player['playerid']
+        current_player['name'] = player['playername']
+        current_player['picture'] = player['picture']
         if player['stats'][0]:
             batting_stats = player['stats'][0][1:]
         else:

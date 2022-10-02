@@ -1,5 +1,7 @@
+from select import select
 import players_comparison
 import league_constraints
+import players_data
 
 
 def suggest_players_from_scratch(players):
@@ -7,18 +9,77 @@ def suggest_players_from_scratch(players):
     diamond_players = diamond_players_selector(players)
     gold_players = gold_players_selector(players)
     silver_players = silver_players_selector(players)
-    suggested = suggest_platnium_players(platinum_players)
+    suggested = suggest_platinum_players(platinum_players)
     suggested.extend(suggest_diamond_players(diamond_players))
     suggested.extend(suggest_gold_players(gold_players))
     suggested.extend(suggest_silver_players(suggested,silver_players))
+
+    for player in players:
+        if player in suggested:
+            players.remove(player)
+
+    if league_constraints.categories_completed(*league_constraints.categories_calculator(suggested)) and league_constraints.special_contraints(suggested):
+        return {"suggested":suggested, 'draft':players}
     
+    return {'message': "Team can not be suggested from above draft"}
+
+
+
+def suggest_alternative_player(draft,required_alt_player,suggestions):
+    #First we need to filter suggested from draft
+    for suggested_player in suggestions:
+        if suggested_player in draft:
+            draft.remove(suggested_player)
+    
+    if required_alt_player['p_type']=="Local":
+        draft = local_players_selector(draft)
+    else:
+        draft = foreigner_players_selector(draft)
+
+    for player in draft:
+        if players_comparison.alternative_player(player['playerid'],required_alt_player['playerid'])['message'] == "Players are alternatives to each other":
+            player['category'] = required_alt_player['category']
+            return player
+
+    return None
+
+
+def suggest_alternates(draft,required_alt_player,suggestions,squad_selected):
+    if suggest_alternative_player(draft,required_alt_player,suggestions):
+        return suggest_alternative_player(draft,required_alt_player,suggestions)
+
+
+    if required_alt_player in draft:
+        draft.remove(required_alt_player)
     
 
-    return suggested
+    if required_alt_player['category'] == "Platinium":
+        suggested = suggest_platinum_players_with_changes(platimun_players_selector(draft),platimun_players_selector(squad_selected))
+        suggested.extend(suggest_diamond_players(diamond_players_selector(draft)))
+        suggested.extend(suggest_gold_players(gold_players_selector(draft)))
+        suggested.extend(suggest_silver_players(suggested,silver_players_selector(draft)))
+        return suggested
+        
+    
+    if required_alt_player['category'] == "Diamond":
+        suggested = suggest_diamond_players_with_changes(diamond_players_selector(draft),diamond_players_selector(squad_selected))
+        suggested.extend(suggest_gold_players(gold_players_selector(draft)))
+        suggested.extend(suggest_silver_players(suggested,silver_players_selector(draft)))
+        return suggested
+    
+
+    if required_alt_player['category'] == "Gold":
+        suggested = suggest_gold_palyers_with_changes(gold_players_selector(draft),gold_players_selector(squad_selected))
+        suggested.extend(suggest_silver_players(suggested,silver_players_selector(draft)))
+        return suggested
+    
+    if required_alt_player['category'] == "Silver":
+        suggested = suggest_silver_players_with_changes(suggestions,silver_players_selector(draft),squad_selected)
+        return suggested
 
 
 
-def suggest_platnium_players(players):
+def suggest_platinum_players(players):
     suggested_players = []
     top_batsman = select_top_batsman(players)
     if top_batsman:
@@ -61,6 +122,117 @@ def suggest_platnium_players(players):
     
     return suggested_players
 
+
+def suggest_platinum_players_with_changes(players,selected):
+    suggested_players = selected
+    if len(selected) == 1 and selected[0]['Bowler']:
+        top_batsman = select_top_batsman(players)
+        if top_batsman:
+            suggested_players.append(top_batsman)
+            players.remove(top_batsman)
+        else:
+            top_bowler = select_top_bowler(players)
+            suggested_players.append(top_bowler)
+            players.remove(top_bowler)
+        
+        foreigner_icluded = 0
+        for player in suggested_players:
+            if player['p_type'] == "Foreigner":
+                foreigner_icluded += 1
+        
+        if foreigner_icluded:
+            if foreigner_icluded >=2:
+                players = local_players_selector(players)
+            top_batsman = select_top_batsman(players)
+            if top_batsman:
+                suggested_players.append(top_batsman)
+            else:
+                suggested_players.append(select_top_bowler(players))
+        else:
+            players = foreigner_players_selector(players)
+            top_batsman = select_top_batsman(players)
+            if top_batsman:
+                suggested_players.append(top_batsman)
+            else:
+                suggested_players.append(select_top_bowler(players))
+        
+    elif len(selected) ==1:
+        top_batsman = select_top_batsman(players)
+        if top_batsman:
+            suggested_players.append(top_batsman)
+            players.remove(top_batsman)
+        else:
+            top_bowler = select_top_bowler(players)
+            suggested_players.append(top_bowler)
+            players.remove(top_bowler)
+        
+        foreigner_icluded = 0
+        for player in suggested_players:
+            if player['p_type'] == "Foreigner":
+                foreigner_icluded += 1
+        
+        if foreigner_icluded:
+            if foreigner_icluded >=2:
+                players = local_players_selector(players)
+            top_bowler = select_top_bowler(players)
+            if top_bowler:
+                suggested_players.append(top_bowler)
+            else:
+                suggested_players.append(select_top_batsman(players))
+        else:
+            players = foreigner_players_selector(players)
+            top_bowler = select_top_bowler(players)
+            if top_bowler:
+                suggested_players.append(top_bowler)
+            else:
+                suggested_players.append(select_top_batsman(players))
+    
+    if len(selected)==2 and (select[0]["Bowler"] or selected[1]["Bowler"]):
+        foreigner_icluded = 0
+        for player in suggested_players:
+            if player['p_type'] == "Foreigner":
+                foreigner_icluded += 1
+        
+        if foreigner_icluded:
+            if foreigner_icluded >=2:
+                players = local_players_selector(players)
+            top_batsman = select_top_batsman(players)
+            if top_batsman:
+                suggested_players.append(top_batsman)
+            else:
+                suggested_players.append(select_top_bowler(players))
+        else:
+            players = foreigner_players_selector(players)
+            top_batsman = select_top_batsman(players)
+            if top_batsman:
+                suggested_players.append(top_batsman)
+            else:
+                suggested_players.append(select_top_bowler(players))
+    elif len(selected)==2:
+        foreigner_icluded = 0
+        for player in suggested_players:
+            if player['p_type'] == "Foreigner":
+                foreigner_icluded += 1
+        
+        if foreigner_icluded:
+            if foreigner_icluded >=2:
+                players = local_players_selector(players)
+            top_bowler = select_top_bowler(players)
+            if top_bowler:
+                suggested_players.append(top_bowler)
+            else:
+                suggested_players.append(select_top_batsman(players))
+        else:
+            players = foreigner_players_selector(players)
+            top_bowler = select_top_bowler(players)
+            if top_bowler:
+                suggested_players.append(top_bowler)
+            else:
+                suggested_players.append(select_top_batsman(players))
+
+
+    
+    return suggested_players
 
 
 def suggest_diamond_players(players):
@@ -107,6 +279,117 @@ def suggest_diamond_players(players):
     return suggested_players
 
 
+def suggest_diamond_players_with_changes(players,selected):
+    suggested_players = selected
+    if len(selected) == 1 and selected[0]['Bowler']:
+        top_batsman = select_top_batsman(players)
+        if top_batsman:
+            suggested_players.append(top_batsman)
+            players.remove(top_batsman)
+        else:
+            top_bowler = select_top_bowler(players)
+            suggested_players.append(top_bowler)
+            players.remove(top_bowler)
+        
+        foreigner_icluded = 0
+        for player in suggested_players:
+            if player['p_type'] == "Foreigner":
+                foreigner_icluded += 1
+        
+        if foreigner_icluded:
+            if foreigner_icluded >=2:
+                players = local_players_selector(players)
+            top_batsman = select_top_batsman(players)
+            if top_batsman:
+                suggested_players.append(top_batsman)
+            else:
+                suggested_players.append(select_top_bowler(players))
+        else:
+            players = foreigner_players_selector(players)
+            top_batsman = select_top_batsman(players)
+            if top_batsman:
+                suggested_players.append(top_batsman)
+            else:
+                suggested_players.append(select_top_bowler(players))
+        
+    elif len(selected) ==1:
+        top_batsman = select_top_batsman(players)
+        if top_batsman:
+            suggested_players.append(top_batsman)
+            players.remove(top_batsman)
+        else:
+            top_bowler = select_top_bowler(players)
+            suggested_players.append(top_bowler)
+            players.remove(top_bowler)
+        
+        foreigner_icluded = 0
+        for player in suggested_players:
+            if player['p_type'] == "Foreigner":
+                foreigner_icluded += 1
+        
+        if foreigner_icluded:
+            if foreigner_icluded >=2:
+                players = local_players_selector(players)
+            top_bowler = select_top_bowler(players)
+            if top_bowler:
+                suggested_players.append(top_bowler)
+            else:
+                suggested_players.append(select_top_batsman(players))
+        else:
+            players = foreigner_players_selector(players)
+            top_bowler = select_top_bowler(players)
+            if top_bowler:
+                suggested_players.append(top_bowler)
+            else:
+                suggested_players.append(select_top_batsman(players))
+    
+    if len(selected)==2 and (select[0]["Bowler"] or selected[1]["Bowler"]):
+        foreigner_icluded = 0
+        for player in suggested_players:
+            if player['p_type'] == "Foreigner":
+                foreigner_icluded += 1
+        
+        if foreigner_icluded:
+            if foreigner_icluded >=2:
+                players = local_players_selector(players)
+            top_batsman = select_top_batsman(players)
+            if top_batsman:
+                suggested_players.append(top_batsman)
+            else:
+                suggested_players.append(select_top_bowler(players))
+        else:
+            players = foreigner_players_selector(players)
+            top_batsman = select_top_batsman(players)
+            if top_batsman:
+                suggested_players.append(top_batsman)
+            else:
+                suggested_players.append(select_top_bowler(players))
+    elif len(selected)==2:
+        foreigner_icluded = 0
+        for player in suggested_players:
+            if player['p_type'] == "Foreigner":
+                foreigner_icluded += 1
+        
+        if foreigner_icluded:
+            if foreigner_icluded >=2:
+                players = local_players_selector(players)
+            top_bowler = select_top_bowler(players)
+            if top_bowler:
+                suggested_players.append(top_bowler)
+            else:
+                suggested_players.append(select_top_batsman(players))
+        else:
+            players = foreigner_players_selector(players)
+            top_bowler = select_top_bowler(players)
+            if top_bowler:
+                suggested_players.append(top_bowler)
+            else:
+                suggested_players.append(select_top_batsman(players))
+
+
+    
+    return suggested_players
+
 
 def suggest_gold_players(players):
     suggested_players = []
@@ -147,6 +430,118 @@ def suggest_gold_players(players):
             suggested_players.append(top_batsman)
         else:
             suggested_players.append(select_top_bowler(players))
+
+    
+    return suggested_players
+
+
+def suggest_gold_palyers_with_changes(players,selected):
+    suggested_players = selected
+    if len(selected) == 1 and selected[0]['Batsman']:
+        top_bowler = select_top_bowler(players)
+        if top_bowler:
+            suggested_players.append(top_bowler)
+            players.remove(top_bowler)
+        else:
+            top_batsman = select_top_batsman(players)
+            suggested_players.append(top_batsman)
+            players.remove(top_batsman)
+        
+        foreigner_icluded = 0
+        for player in suggested_players:
+            if player['p_type'] == "Foreigner":
+                foreigner_icluded += 1
+        
+        if foreigner_icluded:
+            if foreigner_icluded >=2:
+                players = local_players_selector(players)
+            top_bowler = select_top_bowler(players)
+            if top_bowler:
+                suggested_players.append(top_bowler)
+            else:
+                suggested_players.append(select_top_batsman(players))
+        else:
+            players = foreigner_players_selector(players)
+            top_bowler = select_top_bowler(players)
+            if top_bowler:
+                suggested_players.append(top_bowler)
+            else:
+                suggested_players.append(select_top_batsman(players))
+        
+    elif len(selected) ==1:
+        top_batsman = select_top_batsman(players)
+        if top_batsman:
+            suggested_players.append(top_batsman)
+            players.remove(top_batsman)
+        else:
+            top_bowler = select_top_bowler(players)
+            suggested_players.append(top_bowler)
+            players.remove(top_bowler)
+        
+        foreigner_icluded = 0
+        for player in suggested_players:
+            if player['p_type'] == "Foreigner":
+                foreigner_icluded += 1
+        
+        if foreigner_icluded:
+            if foreigner_icluded >=2:
+                players = local_players_selector(players)
+            top_bowler = select_top_bowler(players)
+            if top_bowler:
+                suggested_players.append(top_bowler)
+            else:
+                suggested_players.append(select_top_batsman(players))
+        else:
+            players = foreigner_players_selector(players)
+            top_bowler = select_top_bowler(players)
+            if top_bowler:
+                suggested_players.append(top_bowler)
+            else:
+                suggested_players.append(select_top_batsman(players))
+    
+    if len(selected)==2 and (select[0]["Batsman"] or selected[1]["Batsman"]):
+        foreigner_icluded = 0
+        for player in suggested_players:
+            if player['p_type'] == "Foreigner":
+                foreigner_icluded += 1
+        
+        if foreigner_icluded:
+            if foreigner_icluded >=2:
+                players = local_players_selector(players)
+            top_bowler = select_top_bowler(players)
+            if top_bowler:
+                suggested_players.append(top_bowler)
+            else:
+                suggested_players.append(select_top_batsman(players))
+        else:
+            players = foreigner_players_selector(players)
+            top_bowler = select_top_bowler(players)
+            if top_bowler:
+                suggested_players.append(top_bowler)
+            else:
+                suggested_players.append(select_top_batsman(players))
+    elif len(selected)==2:
+        foreigner_icluded = 0
+        for player in suggested_players:
+            if player['p_type'] == "Foreigner":
+                foreigner_icluded += 1
+        
+        if foreigner_icluded:
+            if foreigner_icluded >=2:
+                players = local_players_selector(players)
+            top_batsman = select_top_batsman(players)
+            if top_batsman:
+                suggested_players.append(top_batsman)
+            else:
+                suggested_players.append(select_top_bowler(players))
+        else:
+            players = foreigner_players_selector(players)
+            top_batsman = select_top_batsman(players)
+            if top_batsman:
+                suggested_players.append(top_batsman)
+            else:
+                suggested_players.append(select_top_bowler(players))
+
 
     
     return suggested_players
@@ -236,6 +631,98 @@ def suggest_silver_players(suggested,players):
     return suggested_players
 
 
+
+
+def suggest_silver_players_with_changes(suggested,players,selected):
+    suggested.extend(selected)
+    suggested_players = []
+    
+    current_keepers = keeper_counter(suggested)
+
+    silver_selected = silver_players_selector(selected)
+    locals , foreigners = league_constraints.foreign_local_calculator(suggested)
+    required_locals = 5-(6-foreigners)-silver_selected
+    locals = local_players_selector(players)
+
+    silver_selected = silver_players_selector(selected)
+
+    selected = len(silver_selected)
+    if current_keepers<2:
+        for i in range(2-current_keepers):
+            top_keeper = select_top_keeper(locals)
+            if top_keeper:
+                suggested_players.append(top_keeper)
+                locals.remove(top_keeper)
+                selected += 1
+            elif select_top_batsman(locals):
+                suggested_players.append(top_batsman)
+                locals.remove(top_batsman)
+                selected += 1
+            else:
+                top_bowler = select_top_bowler(locals)
+                suggested_players.append(top_bowler)
+                locals.remove(top_bowler)
+                selected += 1
+
+
+    current_batsmans = batsman_counter(suggested)
+    current_bowlers = bowler_counter(suggested)
+    locals , foreigners = league_constraints.foreign_local_calculator(suggested)
+    required_locals = 5-(6-foreigners)-selected
+    locals = local_players_selector(players)
+    if current_bowlers<6:
+        for i in range(required_locals):
+                top_bowler = select_top_bowler(locals)
+                if top_bowler:
+                    suggested_players.append(top_bowler)
+                    locals.remove(top_bowler)
+                else:
+                    top_batsman = select_top_batsman(locals)
+                    suggested_players.append(top_batsman)
+                    locals.remove(top_batsman)
+    elif current_batsmans<6:
+        for i in range(required):
+            top_batsman = select_top_batsman(locals)
+            if top_batsman:
+                suggested_players.append(top_batsman)
+                locals.remove(top_batsman)
+            else:
+                top_bowler = select_top_bowler(locals)
+                suggested_players.append(top_bowler)
+                locals.remove(top_bowler)
+
+
+    if foreigners<6:
+        required = 6-foreigners
+        foreigners = foreigner_players_selector(players)
+        if current_batsmans<6:
+            for i in range(required):
+                top_batsman = select_top_batsman(foreigners)
+                if top_batsman:
+                    suggested_players.append(top_batsman)
+                    foreigners.remove(top_batsman)
+                else:
+                    top_bowler = select_top_bowler(foreigners)
+                    suggested_players.append(top_bowler)
+                    foreigners.remove(top_bowler)
+        elif current_bowlers<6:
+            for i in range(required):
+                top_bowler = select_top_bowler(foreigners)
+                if top_bowler:
+                    suggested_players.append(top_bowler)
+                    foreigners.remove(top_bowler)
+                else:
+                    top_batsman = select_top_batsman(foreigners)
+                    suggested_players.append(top_batsman)
+                    foreigners.remove(top_batsman)
+    
+    suggested_players = silver_players_selector(suggested_players)
+
+    
+    return suggested_players
+
+
+
 def batsman_counter(players):
     batsman = 0
 
@@ -244,7 +731,8 @@ def batsman_counter(players):
             batsman += 1
     
     return batsman
-    
+
+
 
 def bowler_counter(players):
     bowlers = 0
@@ -254,6 +742,7 @@ def bowler_counter(players):
             bowlers += 1
     
     return bowlers
+
 
 
 def keeper_counter(players):

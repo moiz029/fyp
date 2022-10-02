@@ -24,6 +24,11 @@ def players_details(playerid):
     return jsonify(players_data.player_details(playerid))
 
 
+@app.route("/get_player_summary/<string:playerid>")
+def player_summary(playerid):
+    return jsonify(players_data.get_player_summary(playerid))
+
+
 @app.route("/compare_players/<string:player1>/<string:player2>")
 def player_comparison(player1,player2):
     players_details = players_comparison.compare_two_players(player1,player2)
@@ -64,9 +69,33 @@ def logout():
     return jsonify({'Message':"Logged out succesfully"})
 
 
+@app.route("/verify_franchise/<string:session_id>")
+def verify_franchise(session_id):
+    if user_management.verify_franchise_session(session_id):
+        return jsonify(user_management.franchise_credentials(session_id))
+    
+    return jsonify({"message":"User not authorized for this request"})
+
+
+@app.route("/all_drafts")
+def all_drafts():
+    drafts_list = players_data.all_drafts()
+    try:
+        session = request.headers['session']
+        if user_management.verify_franchise_session(session) or user_management.verify_admin_session(session):
+            if drafts_list:
+                return jsonify(drafts_list)
+        else:
+            return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
+    
+    return jsonify({"message":"No such draft exists"})
+
+
 @app.route("/draft_players/<string:draft_id>")
 def draft_players(draft_id):
-    players_list = players_data.fetch_drafting_list(draft_id)
+    players_list = players_data.draft_details(draft_id)
     try:
         session = request.headers['session']
         if user_management.verify_franchise_session(session) or user_management.verify_admin_session(session):
@@ -124,7 +153,8 @@ def add_new_venue():
 @app.route("/check/<string:draft_id>")
 def alternates(draft_id):
     player_stats = players_data.draft_details(draft_id)
-    return jsonify(draft.suggest_players_from_scratch(player_stats))
+    suggested_players = draft.suggest_players_from_scratch(player_stats)
+    return jsonify(suggested_players)
 
 
 if __name__ == "__main__":
