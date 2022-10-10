@@ -19,6 +19,13 @@ def allplayers():
     return jsonify(players_data.all_players())
 
 
+
+@app.route("/top_players")
+def top_players():
+    return jsonify(players_data.get_top_players())
+
+
+
 @app.route("/getPlayer/<string:playerid>")
 def players_details(playerid):
     return jsonify(players_data.player_details(playerid))
@@ -56,9 +63,9 @@ def signUp():
 @app.route("/franchiseLogin", methods = ['POST'])
 def login():
     login_credentials = request.get_json()
-    login,session_id = user_management.login_franchise(login_credentials)
+    login = user_management.login_franchise(login_credentials)
     if login:
-        return jsonify(login),{'session_id':session_id}
+        return jsonify(login)
     return jsonify({"message":"Error in signing up franchise"})
 
 
@@ -109,6 +116,39 @@ def draft_players(draft_id):
     return jsonify({"message":"No such draft exists"})
 
 
+@app.route("/select_draft/<string:draft_id>")
+def select_draft(draft_id):
+    try:
+        session = request.headers['session']
+        if user_management.verify_franchise_session(session) or user_management.verify_admin_session(session):
+            draft_players = user_management.select_draft(draft_id,session)
+            if draft_players:
+                return jsonify(draft_players)
+        else:
+            return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
+    
+    return jsonify({"message":"No such draft exists"})
+
+
+@app.route("/select_player", methods = ['POST'])
+def select_player():
+    try:
+        session = request.headers['session']
+        data = request.get_json()
+        if user_management.verify_franchise_session(session) or user_management.verify_admin_session(session):
+            draft_players = user_management.select_player(data,session)
+            if draft_players:
+                return jsonify(draft_players)
+        else:
+            return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
+    
+    return jsonify({"message":"No such draft exists"})
+
+
 
 '''
 BELOW ROUTES ARE FOR ADMIN
@@ -124,6 +164,18 @@ def new_player_info():
     except:
         return jsonify({"message":"User not authorized for this request"})
 
+
+
+@app.route("/set_top_players")
+def set_top_players():
+    try:
+        session = request.headers['session_id']
+        if user_management.verify_admin_session(session):
+            top_players = players_data.set_top_players()
+            return jsonify(top_players)
+        return jsonify({"message":"User not authorized for this request1"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
 
 
 @app.route("/venues")

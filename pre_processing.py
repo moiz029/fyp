@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn.cluster import KMeans
 
 #Below function sumerize players stats into single small dictionary
 def summerize_players(players):
@@ -161,3 +162,60 @@ def get_draft_details(playerid,draft):
     for player in players:
         if player['players_id'] == playerid:
             return player['category'],player['price'],player['p_type']
+
+
+def batting_bowling_split(players_stats):
+    organized_stats = []
+    for player in players_stats:
+        single_player = []
+        single_player.append(player["batting_avg"])
+        single_player.append(player["batting_sr"])
+        single_player.append(player["bowling_average"])
+        single_player.append(player["bowling_sr"])
+        organized_stats.append(single_player)
+    km = KMeans(n_clusters=2)
+
+    clusters = km.fit_predict(X=organized_stats)
+    players_status = []
+    values = ["Unknown","Unknown"]
+
+    for i in range(len(clusters)):
+        if players_stats[i]["Batsman"] and not players_stats[i]["Bowler"]:
+            values[clusters[i]] = "Batsman"
+            values[1-clusters[i]] = "Bowler"
+            break
+        if players_stats[i]["Bowler"] and not players_stats[i]["Batsman"]:
+            values[clusters[i]] = "Bowler"
+            values[1-clusters[i]] = "Batsman"
+            break
+
+    for i in range(len(clusters)):
+        if clusters[i] == 1:
+            players_status.append({players_stats[i]["playerid"]:values[1]})
+        elif clusters[i] == 0:
+            players_status.append({players_stats[i]["playerid"]:values[0]})
+
+    return players_status
+
+
+
+def sort_batters(player,sorted_batters):
+    player_score = player["batting_avg"]*player["batting_sr"]
+    for index, batter in enumerate(sorted_batters):
+        if batter["score"]<player_score and player["batting_innings"]>25:
+            sorted_batters.insert(index,{"playerid":player["playerid"],"score":player_score})
+            return sorted_batters
+    if player["batting_innings"]>25:
+        sorted_batters.append({"playerid":player["playerid"],"score":player_score})
+    return sorted_batters
+
+
+def sort_bowlers(player,sorted_bowllers):
+    player_score = player["bowling_average"]*player["bowling_sr"]
+    for index, bowler in enumerate(sorted_bowllers):
+        if bowler["score"]>player_score and player["bowling_innings"]>25:
+            sorted_bowllers.insert(index,{"playerid":player["playerid"],"score":player_score})
+            return sorted_bowllers
+    if player["bowling_innings"]>10:
+        sorted_bowllers.append({"playerid":player["playerid"],"score":player_score})
+    return sorted_bowllers

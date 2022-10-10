@@ -23,6 +23,47 @@ def all_players():
     return parse_json(data)
 
 
+
+def set_top_players():
+    data = parse_json(db.players_stats.find({}))
+    data = pre_processing.summerize_players(data)
+
+    top_batters = []
+    top_bowlers = []
+
+    for player in data:
+        top_batters = pre_processing.sort_batters(player,top_batters)
+        top_bowlers = pre_processing.sort_bowlers(player,top_bowlers)
+
+    top_batters = top_batters[:10]
+    top_bowlers = top_bowlers[:10]
+
+    batters = {"role":"Batsman",'players':[]}
+    players = []
+    for player in top_batters:
+        players.append(parse_json(db.players_info.find({"cricmetric":player["playerid"]})[0]))
+    batters["players"] = players
+    db.top_players.find_one_and_update({"role":"Batsman"},{'$set':batters})
+
+
+    bowlers = {"role":"Bowlers",'players':[]}
+    players = []
+    for player in top_bowlers:
+        players.append(parse_json(db.players_info.find({"cricmetric":player["playerid"]})[0]))
+    bowlers["players"] = players
+    db.top_players.find_one_and_update({"role":"Bowler"},{'$set':bowlers})
+
+    return [batters,bowlers]
+
+
+
+
+def get_top_players():
+    players = parse_json(db.top_players.find({}))
+    return players
+
+
+
 #Getting players complete info from database if not available then extract it from web
 def player_details(id):
     data = db.players_stats.find({"playerid":id})

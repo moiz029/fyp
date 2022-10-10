@@ -1,7 +1,10 @@
 from select import select
+from unicodedata import category
 import players_comparison
 import league_constraints
 import players_data
+from sklearn.cluster import KMeans
+from sklearn import preprocessing
 
 
 def suggest_players_from_scratch(players):
@@ -848,3 +851,123 @@ def select_top_keeper(players):
             top_batsman = player
 
     return top_batsman
+
+def category_selection(category,players):
+    if category=="Platinium":
+        return players
+    elif category=="Diamond":
+        selected_players = diamond_players_selector(players)
+        selected_players.extend(gold_players_selector(players))
+        selected_players.extend(silver_players_selector(players))
+        return selected_players
+    elif category=="Gold":
+        selected_players = gold_players_selector(players)
+        selected_players.extend(silver_players_selector(players))
+        return selected_players
+    else:
+        return silver_players_selector(players)
+
+def player_type_selection(p_type,players):
+    selected_players = []
+    for player in players:
+        if player["p_type"]==p_type:
+            selected_players.append(player)
+    
+    return selected_players
+
+def role_filtering(role,players):
+    selected_players = []
+    if role=="Batsman":
+        for player in players:
+            if player["Batsman"]:
+                selected_players.append(player)
+    elif role=="Bowler":
+        for player in players:
+            if player["Bolwer"]:
+                selected_players.append(player)
+    elif role=="Wicket-Keeper":
+        for player in players:
+            if player["Wicket-Keeper"]:
+                selected_players.append(player)
+    elif role=="All-Rounder":
+        for player in players:
+            if player["Batsman"] and player["Bowler"]:
+                selected_players.append(player)
+
+
+def speciality_based_selection(role,speciality, players):
+    organized_data = []
+    if role!="Bowler" and speciality=="Consistency":
+        organized_data.append([43])
+        for i in players:
+            single_player.append(i["batting_avg"])
+            organized_data.append(single_player)
+
+        return clustering(players)
+    elif role!="Bowler" and speciality=="Power-Hitting":
+        organized_data.append([140,3])
+        for i in players:
+            single_player = []
+            
+            single_player.append(i["batting_sr"])
+            single_player.append((i["batting_4s"]+i["batting_6s"])/i["batting_innings"])
+            organized_data.append(single_player)
+
+        return clustering(players)
+    
+    elif (role=="Bolwer" or role=="All-Rounder") and speciality=="Economical":
+        organized_data.append([80,3])
+        for i in players:
+            single_player = []
+            
+            single_player.append(i["bowling_dots"])
+            single_player.append(i["bowling_economy"])
+            organized_data.append(single_player)
+
+        return clustering(players)
+
+    elif (role=="Bolwer" or role=="All-Rounder") and speciality=="Wicket-Taking":
+        organized_data.append([3,15])
+        for i in players:
+            single_player = []
+            
+            single_player.append(i["bowling_wickets"]/i["bowling_innings"])
+            single_player.append(i["bowling_average"])
+            organized_data.append(single_player)
+
+        return clustering(players)
+    else:
+        {'message':"Invalid role and speciality"}
+
+def suggest_players(data):
+    draft_players = data["draft"]
+    category = data["category"]
+    p_type = data["p_type"]
+    role = data["role"]
+    player_speciality = data["speciality"]
+
+    valid_players = category_selection(category,draft_players)
+    valid_players = player_type_selection(p_type,valid_players)
+    valid_players = role_filtering(role,valid_players)
+    specialized_list = speciality_based_selection(role,player_speciality,valid_players)
+    suggest_players = []
+    if type(specialized_list)==dict:
+        return specialized_list
+    
+    for count in range(1,len(specialized_list)):
+        if specialized_list[count]==specialized_list[0]:
+            suggest_players.append(valid_players[count])
+    
+    if len(suggest_players)==0:
+        return {'message':"No such player available in draft"}
+    
+    return suggest_players
+    
+
+
+def clustering(players):
+    km = KMeans(n_clusters=2)
+    organized_data = preprocessing.normalize(players,norm='l2')
+    clusters = km.fit_predict(X=organized_data)
+
+    return clusters

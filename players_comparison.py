@@ -39,9 +39,9 @@ def head_to_head_stats_management(stats):
 def compare_two_players(player1,player2):
     p1_to_p2 = head_to_head(player2,player1)
     p2_to_p1 = head_to_head(player1,player2)
-    player1 = players_data.player_details(player1)
+    player1 = players_data.get_player_stats(player1)
     p1_positional = player1['position_stats']
-    player2 = players_data.player_details(player2)
+    player2 = players_data.get_player_stats(player2)
     p2_positional = player2['position_stats']
     player1 = pre_processing.summerize_players([player1])[0]
     player2 = pre_processing.summerize_players([player2])[0]

@@ -2,6 +2,7 @@ import flask_pymongo
 import json
 from bson import json_util
 import uuid
+import players_data
 
 #Connection with Database
 try:
@@ -18,10 +19,8 @@ except:
 
 def signup_new_franchise(franchise_details):
     franchise_details = franchise_details
-    franchise_details["draft"] = "-"
+    franchise_details["draft"] = players_data.draft_details("draft_22")
     franchise_details["team"] = []
-    franchise_details['captain_id'] = False
-    franchise_details['captains_password'] = False
     db.franchises.insert_one(franchise_details)
     return True
 
@@ -33,9 +32,10 @@ def login_franchise(login_credentionals):
         franchise = parse_json(franchise[0])
         session = dict(franchise['_id'])['$oid']+str(len(parse_json(session_frechise)))+str(uuid.uuid4())
         db.sessions.insert_one({'session_id':session,'user_previliges':'franchise',"user_id": franchise["franchise_id"]})
-        return franchise,session
+        franchise['session_id'] = session
+        return franchise
     except IndexError:
-        return False,False
+        return False
 
 
 
@@ -81,6 +81,30 @@ def verify_admin_session(session_id):
 
 def get_venues():
     return parse_json(db.venues.find({}))
+
+
+def select_draft(draft_id,session):
+    franchise = franchise_credentials(session)
+
+    if franchise['draft'] == "-":
+        franchise['draft'] = players_data.draft_details(draft_id)
+        db.franchises.find_one_and_update({"franchise_id":franchise["franchise_id"]},{"draft":franchise["draft"]})
+        return franchise['draft']
+    
+    return {"message": "User already have selected draft"}
+
+
+
+def select_player(data,session):
+    player = data['selected_player']
+    franchise = franchise_credentials(session)
+
+    franchise["draft"].remove(player)
+    franchise["team"].append(player)
+    db.franchises.find_one_and_update({"franchise_id":franchise["franchise_id"]},{"draft":franchise["draft"],"team":franchise["team"]})
+
+    return {"message": "Player added to team"}
+
 
 
 
