@@ -3,6 +3,7 @@ from unicodedata import category
 import players_comparison
 import league_constraints
 import players_data
+import pre_processing
 from sklearn.cluster import KMeans
 from sklearn import preprocessing
 
@@ -883,7 +884,7 @@ def role_filtering(role,players):
                 selected_players.append(player)
     elif role=="Bowler":
         for player in players:
-            if player["Bolwer"]:
+            if player["Bowler"]:
                 selected_players.append(player)
     elif role=="Wicket-Keeper":
         for player in players:
@@ -893,17 +894,20 @@ def role_filtering(role,players):
         for player in players:
             if player["Batsman"] and player["Bowler"]:
                 selected_players.append(player)
+    return selected_players
 
 
 def speciality_based_selection(role,speciality, players):
     organized_data = []
+    single_player = []
     if role!="Bowler" and speciality=="Consistency":
         organized_data.append([43])
         for i in players:
             single_player.append(i["batting_avg"])
             organized_data.append(single_player)
+            single_player = []
 
-        return clustering(players)
+        return clustering(organized_data)
     elif role!="Bowler" and speciality=="Power-Hitting":
         organized_data.append([140,3])
         for i in players:
@@ -912,10 +916,12 @@ def speciality_based_selection(role,speciality, players):
             single_player.append(i["batting_sr"])
             single_player.append((i["batting_4s"]+i["batting_6s"])/i["batting_innings"])
             organized_data.append(single_player)
+            single_player = []
 
-        return clustering(players)
+        return clustering(organized_data)
     
-    elif (role=="Bolwer" or role=="All-Rounder") and speciality=="Economical":
+    elif (role=="Bowler" or role=="All-Rounder") and speciality=="Economical":
+        
         organized_data.append([80,3])
         for i in players:
             single_player = []
@@ -923,8 +929,9 @@ def speciality_based_selection(role,speciality, players):
             single_player.append(i["bowling_dots"])
             single_player.append(i["bowling_economy"])
             organized_data.append(single_player)
+            single_player = []
 
-        return clustering(players)
+        return clustering(organized_data)
 
     elif (role=="Bolwer" or role=="All-Rounder") and speciality=="Wicket-Taking":
         organized_data.append([3,15])
@@ -934,8 +941,9 @@ def speciality_based_selection(role,speciality, players):
             single_player.append(i["bowling_wickets"]/i["bowling_innings"])
             single_player.append(i["bowling_average"])
             organized_data.append(single_player)
+            single_player = []
 
-        return clustering(players)
+        return clustering(organized_data)
     else:
         {'message':"Invalid role and speciality"}
 
@@ -951,17 +959,75 @@ def suggest_players(data):
     valid_players = role_filtering(role,valid_players)
     specialized_list = speciality_based_selection(role,player_speciality,valid_players)
     suggest_players = []
+
     if type(specialized_list)==dict:
         return specialized_list
     
     for count in range(1,len(specialized_list)):
         if specialized_list[count]==specialized_list[0]:
-            suggest_players.append(valid_players[count])
+            suggest_players.append(valid_players[count-1])
     
     if len(suggest_players)==0:
         return {'message':"No such player available in draft"}
+
+    sorted_list = []
+    if role=="Batsman":
+        for player in suggest_players:
+            sorted_list = pre_processing.sort_batters(player,sorted_list)
+
     
-    return suggest_players
+    if role=="Bowler":
+        for player in suggest_players:
+            sorted_list = pre_processing.sort_bowlers(player,sorted_list)
+    
+    sorted_players = []
+        
+    for id in sorted_list:
+        for player in suggest_players:
+            if player["playerid"] == id["playerid"]:
+                sorted_players.append(player)
+
+    
+    if role=="All-Rounder":
+        batting_sort = []
+        for player in suggest_players:   
+            batting_sort =sort_batters(player,batting_sort)
+        
+
+        
+        bowling_sort = []
+        for player in suggest_players:
+            bowling_sort =sort_bowlers(player,bowling_sort)
+        
+        all_round_score = []
+        batting_position = 1
+        for player in batting_sort:
+            bowling_poisition=1
+            for i in bowling_sort:
+                if player["playerid"] == i["playerid"]:
+                    all_round_score.append({"playerid":player["playerid"],"score":(batting_position+bowling_poisition)})
+                    break
+                bowling_poisition +=1
+            batting_position +=1
+        sorted_by_score = []
+        for count in range(len(all_round_score)):
+            count1 = 0
+            for score in sorted_by_score:
+                if score["score"]>all_round_score[count]["score"]:
+                    sorted_by_score.insert(count1,all_round_score[count])
+                    break
+                count1 +=1
+            if count1==len(sorted_by_score):
+                sorted_by_score.append(all_round_score[count])
+        for id in sorted_by_score:
+            for player in suggest_players:
+                if player["playerid"] == id["playerid"]:
+                    sorted_players.append(player)
+        
+
+    
+    
+    return sorted_players
     
 
 
@@ -971,3 +1037,25 @@ def clustering(players):
     clusters = km.fit_predict(X=organized_data)
 
     return clusters
+
+
+
+def sort_batters(player,sorted_batters):
+    player_score = player["batting_avg"]*player["batting_sr"]
+    for index, batter in enumerate(sorted_batters):
+        if batter["score"]<player_score and player["batting_innings"]>25:
+            sorted_batters.insert(index,{"playerid":player["playerid"],"score":player_score})
+            return sorted_batters
+    
+    sorted_batters.append({"playerid":player["playerid"],"score":player_score})
+    return sorted_batters
+
+
+def sort_bowlers(player,sorted_bowllers):
+    player_score = player["bowling_average"]*player["bowling_sr"]
+    for index, bowler in enumerate(sorted_bowllers):
+        if bowler["score"]>player_score:
+            sorted_bowllers.insert(index,{"playerid":player["playerid"],"score":player_score})
+            return sorted_bowllers
+    sorted_bowllers.append({"playerid":player["playerid"],"score":player_score})
+    return sorted_bowllers

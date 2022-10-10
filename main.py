@@ -149,6 +149,21 @@ def select_player():
     return jsonify({"message":"No such draft exists"})
 
 
+@app.route("/suggest_players", methods = ['POST'])
+def suggest_players():
+    try:
+        session = request.headers['session']
+        data = request.get_json()
+        if user_management.verify_franchise_session(session) or user_management.verify_admin_session(session):
+            suggested_players = draft.suggest_players(data)
+            return jsonify(suggested_players)
+        else:
+            return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
+    
+
+
 
 '''
 BELOW ROUTES ARE FOR ADMIN
@@ -208,6 +223,20 @@ def alternates(draft_id):
     suggested_players = draft.suggest_players_from_scratch(player_stats)
     return jsonify(suggested_players)
 
+
+@app.route("/check")
+def drafting_player():
+    player_stats = players_data.draft_details("draft_22")
+    data = {
+        "category":"Platinium",
+        "role":"All-Rounder",
+        "p_type":"Local",
+        "speciality":"Economical",
+        "draft":player_stats
+    }
+    
+    suggested_players = draft.suggest_players(data)
+    return jsonify(suggested_players)
 
 if __name__ == "__main__":
     app.run(debug=True)
