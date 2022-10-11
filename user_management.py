@@ -101,7 +101,7 @@ def select_player(data,session):
 
     franchise["draft"].remove(player)
     franchise["team"].append(player)
-    db.franchises.find_one_and_update({"franchise_id":franchise["franchise_id"]},{"draft":franchise["draft"],"team":franchise["team"]})
+    db.franchises.find_one_and_update({"franchise_id":franchise["franchise_id"]},{'$set':{"draft":franchise["draft"],"team":franchise["team"]}})
 
     return {"message": "Player added to team"}
 

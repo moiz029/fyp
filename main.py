@@ -4,6 +4,7 @@ import players_data
 import players_comparison
 import user_management
 import draft
+import dls_calculator
 from flask_cors import CORS
 
 
@@ -88,7 +89,7 @@ def verify_franchise(session_id):
 def all_drafts():
     drafts_list = players_data.all_drafts()
     try:
-        session = request.headers['session']
+        session = request.headers['session_id']
         if user_management.verify_franchise_session(session) or user_management.verify_admin_session(session):
             if drafts_list:
                 return jsonify(drafts_list)
@@ -104,7 +105,7 @@ def all_drafts():
 def draft_players(draft_id):
     players_list = players_data.draft_details(draft_id)
     try:
-        session = request.headers['session']
+        session = request.headers['session_id']
         if user_management.verify_franchise_session(session) or user_management.verify_admin_session(session):
             if players_list:
                 return jsonify(players_list)
@@ -119,7 +120,7 @@ def draft_players(draft_id):
 @app.route("/select_draft/<string:draft_id>")
 def select_draft(draft_id):
     try:
-        session = request.headers['session']
+        session = request.headers['session_id']
         if user_management.verify_franchise_session(session) or user_management.verify_admin_session(session):
             draft_players = user_management.select_draft(draft_id,session)
             if draft_players:
@@ -135,7 +136,7 @@ def select_draft(draft_id):
 @app.route("/select_player", methods = ['POST'])
 def select_player():
     try:
-        session = request.headers['session']
+        session = request.headers['session_id']
         data = request.get_json()
         if user_management.verify_franchise_session(session) or user_management.verify_admin_session(session):
             draft_players = user_management.select_player(data,session)
@@ -149,10 +150,12 @@ def select_player():
     return jsonify({"message":"No such draft exists"})
 
 
+
+
 @app.route("/suggest_players", methods = ['POST'])
 def suggest_players():
     try:
-        session = request.headers['session']
+        session = request.headers['session_id']
         data = request.get_json()
         if user_management.verify_franchise_session(session) or user_management.verify_admin_session(session):
             suggested_players = draft.suggest_players(data)
@@ -164,6 +167,19 @@ def suggest_players():
     
 
 
+@app.route("/dl_calculator", methods = ['POST'])
+def dl_calulator():
+    try:
+        session = request.headers['session_id']
+        data = request.get_json()
+        
+        if user_management.verify_franchise_session(session) or user_management.verify_admin_session(session):
+            par_score = dls_calculator.required_score(int(data["team1Score"]),int(data["oversRemaining"]),int(data["wickets_in_hand"]))
+            return jsonify({"required_score":par_score})
+        else:
+            return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
 
 '''
 BELOW ROUTES ARE FOR ADMIN
