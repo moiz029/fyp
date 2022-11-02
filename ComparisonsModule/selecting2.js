@@ -2,192 +2,30 @@ import React from 'react';
 import { StyleSheet, Text, View, ImageBackground, TouchableOpacity} from 'react-native';
 import {useState} from 'react';
 import { Picker } from '@react-native-picker/picker';
+import {data, addData} from '../DataBase/api';
+//import {data, addData} from '../DataBase/data'
+import { set } from 'react-native-reanimated';
 
 
 export default function Selection({ route, navigation }) {
-
-  const [players, setPlayers] = useState([
-    {
-      name: 'BABAR AZAM',
-      picSource: require('../assets/babarAzam.jpg'),
-      type: 'Batsman',
-      country: 'Pakistan',
-      innings: 80,
-      iccRanking: 1,
-      runs: 3300,
-      avg: 48.5,
-      strikeRate: 100.5,
-      hundreds: 5,
-      fifties: 12,
-      highest: 125,
-    },
-    {
-      name: 'BEN STOKES',
-      picSource: require('../assets/benStokes.jpg'),
-      type: 'Batsman',
-      country: 'England',
-      innings: 80,
-      iccRanking: 1,
-      runs: 3300,
-      avg: 48.5,
-      strikeRate: 100.5,
-      hundreds: 5,
-      fifties: 12,
-      highest: 125,
-    },
-    {
-      name: 'GLENN MAXWELL',
-      picSource: require('../assets/glennMaxwell.jpg'),
-      type: 'Batsman',
-      country: 'Pakistan',
-      innings: 80,
-      iccRanking: 1,
-      runs: 3300,
-      avg: 48.5,
-      strikeRate: 100.5,
-      hundreds: 5,
-      fifties: 12,
-      highest: 125,
-    },
-    {
-      name: 'GLENN PHILLIPS',
-      picSource: require('../assets/glennPhillips.jpg'),
-      type: 'Batsman',
-      country: 'Pakistan',
-      innings: 80,
-      iccRanking: 1,
-      runs: 3300,
-      avg: 48.5,
-      strikeRate: 100.5,
-      hundreds: 5,
-      fifties: 12,
-      highest: 125,
-    },
-    {
-      name: 'HARSHAL PATEL',
-      picSource: require('../assets/harshalPatel.jpg'),
-      type: 'Batsman',
-      country: 'Pakistan',
-      innings: 80,
-      iccRanking: 1,
-      runs: 3300,
-      avg: 48.5,
-      strikeRate: 100.5,
-      hundreds: 5,
-      fifties: 12,
-      highest: 125,
-    },
-    {
-      name: 'LIAM LIVINGSTONE',
-      picSource: require('../assets/liamLivingstone.jpg'),
-      type: 'Batsman',
-      country: 'Pakistan',
-      innings: 80,
-      iccRanking: 1,
-      runs: 3300,
-      avg: 48.5,
-      strikeRate: 100.5,
-      hundreds: 5,
-      fifties: 12,
-      highest: 125,
-    },
-    {
-      name: 'MUHAMMAD RIZWAN',
-      picSource: require('../assets/m.rizwan.jpg'),
-      type: 'Batsman',
-      country: 'Pakistan',
-      innings: 80,
-      iccRanking: 1,
-      runs: 3300,
-      avg: 48.5,
-      strikeRate: 100.5,
-      hundreds: 5,
-      fifties: 12,
-      highest: 125,
-    },
-    {
-      name: 'MOEEN ALI',
-      picSource: require('../assets/moeenAli.jpg'),
-      type: 'Batsman',
-      country: 'Pakistan',
-      innings: 80,
-      iccRanking: 1,
-      runs: 3300,
-      avg: 48.5,
-      strikeRate: 100.5,
-      hundreds: 5,
-      fifties: 12,
-      highest: 125,
-    },
-    {
-      name: 'MUSTAFIZUR RAHMAN',
-      picSource: require('../assets/mustafizurRahman.jpg'),
-      type: 'Batsman',
-      country: 'Pakistan',
-      innings: 80,
-      iccRanking: 1,
-      runs: 3300,
-      avg: 48.5,
-      strikeRate: 100.5,
-      hundreds: 5,
-      fifties: 12,
-      highest: 125,
-    },
-    {
-      name: 'RASHID KHAN',
-      picSource: require('../assets/rashidKhan.jpg'),
-      type: 'Batsman',
-      country: 'Pakistan',
-      innings: 80,
-      iccRanking: 1,
-      runs: 3300,
-      avg: 48.5,
-      strikeRate: 100.5,
-      hundreds: 5,
-      fifties: 12,
-      highest: 125,
-    },
-    {
-      name: 'SHAHEEN AFRIDI',
-      picSource: require('../assets/shaheenAfridi.jpg'),
-      type: 'Batsman',
-      country: 'Pakistan',
-      innings: 80,
-      iccRanking: 1,
-      runs: 3300,
-      avg: 48.5,
-      strikeRate: 100.5,
-      hundreds: 5,
-      fifties: 12,
-      highest: 125,
-    },
-    {
-      name: 'WAINDU HASARANGA',
-      picSource: require('../assets/waninduHasaranga.jpg'),
-      type: 'Bowler',
-      country: 'SriLanka',
-      innings: 80,
-      iccRanking: 1,
-      runs: 3300,
-      avg: 48.5,
-      strikeRate: 100.5,
-      hundreds: 5,
-      fifties: 12,
-      highest: 125,
-    },
-  ])
+  const players = data()
+  
+  
+  
+  
+  
 
   var player1 = {}
   var player2 = {}
   var [selectedCountry, setSelectedCountry] = useState('Country')
   var [selectedType, setSelectedType] = useState('Type')
-  var [selectedPlayer1, setSelectedPlayer1] = useState('BABAR AZAM')
-  var [selectedPlayer2, setSelectedPlayer2] = useState('BABAR AZAM')
+  var [selectedPlayer1, setSelectedPlayer1] = useState()
+  var [selectedPlayer2, setSelectedPlayer2] = useState()
 
   var types = ['Type']
   players.map((player)=>{
-    if(!types.includes(player.type))
-      types.push(player.type)
+    if(!types.includes(player.role))
+      types.push(player.role)
   })
  
   var countries = ['Country']
@@ -245,9 +83,10 @@ export default function Selection({ route, navigation }) {
         <View  style= {{justifyContent: 'center', alignSelf: 'center', marginBottom: 30,flex: 2}}>
           <Picker
             style={{ height: 40,width: 250, justifyContent: 'center', backgroundColor: '#ff8182c0'}}
-            // selectedValue={selectedPlayer1}
-            onValueChange={(selected) => { player1 = selected
-            // setSelectedPlayer1(selected.name)
+            selectedValue={selectedPlayer1}
+            onValueChange={(selected) => {
+            player1 = selected
+            //setSelectedPlayer1(selected)
             }}
             
           >
@@ -257,7 +96,7 @@ export default function Selection({ route, navigation }) {
                   <Picker.Item label={item.name} value={item} key={index}/>
                 )
               }
-              else if(selectedCountry == 'Country' && item.type == selectedType){
+              else if(selectedCountry == 'Country' && item.role == selectedType){
                 return(
                   <Picker.Item label={item.name} value={item} key={index}/>
                 )
@@ -267,7 +106,7 @@ export default function Selection({ route, navigation }) {
                   <Picker.Item label={item.name} value={item} key={index}/>
                 )
               }
-              else if(item.country == selectedCountry && item.type == selectedType){
+              else if(item.country == selectedCountry && item.role == selectedType){
                 return(
                   <Picker.Item label={item.name} value={item} key={index}/>
                 )
@@ -285,7 +124,7 @@ export default function Selection({ route, navigation }) {
             style={{ height: 40,width: 250, justifyContent: 'center', backgroundColor: '#5bcffac0'}}
             // selectedValue={selectedPlayer2.name}
             onValueChange={(selected) => { 
-              // setSelectedPlayer2(selected)
+              //setSelectedPlayer2(selected)
               player2 = selected
             }}
             
@@ -296,7 +135,7 @@ export default function Selection({ route, navigation }) {
                   <Picker.Item label={item.name} value={item} key={index}/>
                 )
               }
-              else if(selectedCountry == 'Country' && item.type == selectedType){
+              else if(selectedCountry == 'Country' && item.role == selectedType){
                 return(
                   <Picker.Item label={item.name} value={item} key={index}/>
                 )
@@ -306,7 +145,7 @@ export default function Selection({ route, navigation }) {
                   <Picker.Item label={item.name} value={item} key={index}/>
                 )
               }
-              else if(item.country == selectedCountry && item.type == selectedType){
+              else if(item.country == selectedCountry && item.role == selectedType){
                 return(
                   <Picker.Item label={item.name} value={item} key={index}/>
                 )
@@ -318,6 +157,7 @@ export default function Selection({ route, navigation }) {
         <View>
           <TouchableOpacity
             onPress={()=>{
+              console.log(player1)
               navigation.navigate('Compare', {player1, player2})
             }}
           >

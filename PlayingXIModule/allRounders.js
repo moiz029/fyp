@@ -18,7 +18,7 @@ export default function allRounder({ route, navigation }) {
         var noAllRounders = countAllRounders()
         if(squad.includes(players[index])){
             alert('Player Already in PlayingIX')
-        }else if(noBowlers == 4) {
+        }else if(noAllRounders == 2) {
             alert('Squad Already has 2 AllRounders')
         }else{
             var temp = squad

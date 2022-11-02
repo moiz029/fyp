@@ -22,8 +22,8 @@ export default function playingXI({ route, navigation }) {
         {
           name: 'BEN STOKES',
           picSource: require('../assets/benStokes.jpg'),
-          type: 'Batsman',
-          country: 'Pakistan',
+          type: 'AllRounder',
+          country: 'England',
           innings: 80,
           iccRanking: 1,
           runs: 3300,
@@ -37,7 +37,7 @@ export default function playingXI({ route, navigation }) {
           name: 'GLENN MAXWELL',
           picSource: require('../assets/glennMaxwell.jpg'),
           type: 'Batsman',
-          country: 'Pakistan',
+          country: 'Australia',
           innings: 80,
           iccRanking: 1,
           runs: 3300,
@@ -51,7 +51,7 @@ export default function playingXI({ route, navigation }) {
           name: 'GLENN PHILLIPS',
           picSource: require('../assets/glennPhillips.jpg'),
           type: 'Batsman',
-          country: 'Pakistan',
+          country: 'NewZealand',
           innings: 80,
           iccRanking: 1,
           runs: 3300,
@@ -64,8 +64,8 @@ export default function playingXI({ route, navigation }) {
         {
           name: 'HARSHAL PATEL',
           picSource: require('../assets/harshalPatel.jpg'),
-          type: 'Batsman',
-          country: 'Pakistan',
+          type: 'Bowler',
+          country: 'India',
           innings: 80,
           iccRanking: 1,
           runs: 3300,
@@ -78,8 +78,8 @@ export default function playingXI({ route, navigation }) {
         {
           name: 'LIAM LIVINGSTONE',
           picSource: require('../assets/liamLivingstone.jpg'),
-          type: 'Batsman',
-          country: 'Pakistan',
+          type: 'AllRounder',
+          country: 'England',
           innings: 80,
           iccRanking: 1,
           runs: 3300,
@@ -106,8 +106,8 @@ export default function playingXI({ route, navigation }) {
         {
           name: 'MOEEN ALI',
           picSource: require('../assets/moeenAli.jpg'),
-          type: 'Batsman',
-          country: 'Pakistan',
+          type: 'AllRounder',
+          country: 'England',
           innings: 80,
           iccRanking: 1,
           runs: 3300,
@@ -121,7 +121,7 @@ export default function playingXI({ route, navigation }) {
           name: 'MUSTAFIZUR RAHMAN',
           picSource: require('../assets/mustafizurRahman.jpg'),
           type: 'Batsman',
-          country: 'Pakistan',
+          country: 'Bangladesh',
           innings: 80,
           iccRanking: 1,
           runs: 3300,
@@ -134,8 +134,8 @@ export default function playingXI({ route, navigation }) {
         {
           name: 'RASHID KHAN',
           picSource: require('../assets/rashidKhan.jpg'),
-          type: 'Batsman',
-          country: 'Pakistan',
+          type: 'Bowler',
+          country: 'Afghanistan',
           innings: 80,
           iccRanking: 1,
           runs: 3300,
@@ -148,7 +148,7 @@ export default function playingXI({ route, navigation }) {
         {
           name: 'SHAHEEN AFRIDI',
           picSource: require('../assets/shaheenAfridi.jpg'),
-          type: 'Batsman',
+          type: 'Bowler',
           country: 'Pakistan',
           innings: 80,
           iccRanking: 1,
@@ -163,7 +163,7 @@ export default function playingXI({ route, navigation }) {
           name: 'WAINDU HASARANGA',
           picSource: require('../assets/waninduHasaranga.jpg'),
           type: 'Bowler',
-          country: 'Pakistan',
+          country: 'SriLanka',
           innings: 80,
           iccRanking: 1,
           runs: 3300,
@@ -193,7 +193,7 @@ export default function playingXI({ route, navigation }) {
       console.log(batsmen)
       bowlers = players.filter((player)=>{return(player.type == 'Bowler')})
       console.log(bowlers)
-      allRounders = players.filter((player)=>{player.type == 'AllRounder'})
+      allRounders = players.filter((player)=>{return(player.type == 'AllRounder')})
       console.log(allRounders)
 
     return(

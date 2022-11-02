@@ -1,0 +1,904 @@
+[
+    {
+      "_id": {
+        "$oid": "62545154e6edfa3e03f3f5a5"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "azam-khan-1137262", 
+      "cricmetric": "Azam+Khan", 
+      "name": "Azam Khan", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/326500/326525.png", 
+      "role": "Wicket-Keeper Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62869f7053bbcf2bc5375b01"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "ahmed-shehzad-259410", 
+      "cricmetric_id": "Ahmed+Shehzad", 
+      "name": "Ahmed Shehzad", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316606.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62877ba26dd88ebe35ef0c5c"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "babar-azam-348144", 
+      "cricmetric": "Babar+Azam", 
+      "name": "Babar Azam", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320400/320448.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62877cca6dd88ebe35ef0c5d"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "mohammad-rizwan-323389", 
+      "cricmetric": "Mohammad+Rizwan", 
+      "name": "Muhammad Rizwan", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320400/320458.png", 
+      "role": "Wicket-Keeper Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62877e666dd88ebe35ef0c5e"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "fakhar-zaman-512191", 
+      "cricmetric": "Fakhar+Zaman", 
+      "name": "Fakhar Zaman", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320400/320449.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62877f196dd88ebe35ef0c5f"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "haider-ali-1168651", 
+      "cricmetric": "Haider+Ali", 
+      "name": "Haider Ali", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322204.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62877fed6dd88ebe35ef0c60"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "sarfaraz-ahmed-227760", 
+      "cricmetric": "Sarfaraz+Ahmed", 
+      "name": "Sarfaraz Ahmed", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316500/316592.png", 
+      "role": "Wicket-Keeper Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "628780ce6dd88ebe35ef0c61"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "sohaib-maqsood-43266", 
+      "cricmetric": "Sohaib+Maqsood", 
+      "name": "Sohaib Maqsood", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316500/316576.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287ba6650b68dee38fb6f24"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "asif-ali-494230", 
+      "cricmetric": "Asif+Ali", 
+      "name": "Asif Ali", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322100/322192.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287bbe550b68dee38fb6f25"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "aamer-yamin-434429", 
+      "cricmetric": "Aamer+Yamin", 
+      "name": "Aamer Yamin", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322100/322157.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287bcf450b68dee38fb6f27"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "amad-butt-717373", 
+      "cricmetric": "Amad+Butt", 
+      "name": "Amad Butt", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/326400/326490.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287be4b50b68dee38fb6f29"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "anwar-ali-232491", 
+      "cricmetric": "Anwar+Ali", 
+      "name": "Anwar Ali", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322100/322190.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287bf9950b68dee38fb6f2a"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "faheem-ashraf-681117", 
+      "cricmetric": "Faheem+Ashraf", 
+      "name": "Faheem Ashraf", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322100/322198.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287c00d50b68dee38fb6f2b"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "imad-wasim-227758", 
+      "cricmetric": "Imad+Wasim", 
+      "name": "Imad Wasim", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320400/320451.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287c16b50b68dee38fb6f2c"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "kamran-akmal-41028", 
+      "cricmetric": "Kamran+Akmal", 
+      "name": "Kamran Akmal", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320400/320456.png", 
+      "role": "Wicket-Keeper Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287c44c50b68dee38fb6f2d"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "khushdil-shah-716733", 
+      "cricmetric": "Khushdil+Shah", 
+      "name": "Khushdil Shah", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322100/322168.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287c4dd50b68dee38fb6f2e"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "mohammad-hafeez-41434", 
+      "cricmetric": "Mohammad+Hafeez", 
+      "name": "Mohammad Hafeez", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316500/316528.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287c5f250b68dee38fb6f2f"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "shadab-khan-922943", 
+      "cricmetric": "Shadab+Khan", 
+      "name": "Shadab Khan", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320400/320467.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287c6b950b68dee38fb6f30"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "shoaib-malik-42657", 
+      "cricmetric": "Shoaib+Malik", 
+      "name": "Shoaib Malik", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320400/320470.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287c7e350b68dee38fb6f31"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "sohail-tanvir-43265", 
+      "cricmetric": "Sohail+Tanvir", 
+      "name": "Sohail Tanvir", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320400/320472.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287c8aa50b68dee38fb6f32"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "wahab-riaz-43590", 
+      "cricmetric": "Wahab+Riaz", 
+      "name": "Wahab Riaz", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316500/316530.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287d26850b68dee38fb6f33"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "usman-shinwari-697279", 
+      "cricmetric": "Usman+Shinwari", 
+      "name": "Usman Shinwari", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322258.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287d2e750b68dee38fb6f34"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "usman-qadir-348152", 
+      "cricmetric": "Usman+Qadir", 
+      "name": "Usman Qadir", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322257.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287da9450b68dee38fb6f36"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "shahnawaz-dahani-1203995", 
+      "cricmetric": "Shahnawaz+Dahani", 
+      "name": "Shahnawaz Dahani", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322100/322169.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287dbab50b68dee38fb6f37"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "shaheen-shah-afridi-1072470", 
+      "cricmetric": "Shaheen+Shah+Afridi", 
+      "name": "Shaheen Shah Afridi", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322250.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287dceb50b68dee38fb6f38"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "rumman-raees-448243", 
+      "cricmetric": "Rumman+Raees", 
+      "name": "Rumman Raees", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_h_100_2x/lsci/db/PICTURES/CMS/302800/302883.jpg", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287dda950b68dee38fb6f39"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "naseem-shah-1158088", 
+      "cricmetric": "Naseem+Shah", 
+      "name": "Naseem Shah", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322223.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287de6d50b68dee38fb6f3a"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "muhammad-musa-1072472", 
+      "cricmetric": "Muhammad+Musa", 
+      "name": "Muhammad Musa", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322220.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287df0f50b68dee38fb6f3b"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "mohammad-wasim-1185538", 
+      "cricmetric": "Mohammad+Wasim", 
+      "name": "Mohammad Wasim", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322100/322154.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287e04350b68dee38fb6f3c"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "mohammad-nawaz-348148", 
+      "cricmetric": "Mohammad+Nawaz%283%29", 
+      "name": "Mohammad Nawaz", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322217.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287e11150b68dee38fb6f3d"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "mohammad-irfan-429981", 
+      "cricmetric": "Mohammad+Irfan", 
+      "name": "Mohammad Irfan", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316684.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287e18e50b68dee38fb6f3e"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "mohammad-imran-916727", 
+      "cricmetric": "Mohammad+Imran", 
+      "name": "Mohammad Imran", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_h_100_2x/lsci/db/PICTURES/CMS/273100/273115.1.jpg", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287e22d50b68dee38fb6f3f"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "mohammad-ilyas-1159371", 
+      "cricmetric": "Mohammad+Ilyas", 
+      "name": "Mohammad Ilyas", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/326400/326492.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287e2a750b68dee38fb6f40"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "mohammad-hasnain-1158100", 
+      "cricmetric": "Mohammad+Hasnain", 
+      "name": "Mohammad Hasnain", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322216.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287e34550b68dee38fb6f41"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "mohammad-amir-290948", 
+      "cricmetric": "Mohammad+Amir", 
+      "name": "Mohammad Amir", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320400/320457.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287e3a850b68dee38fb6f42"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "junaid-khan-259551", 
+      "cricmetric": "Junaid+Khan", 
+      "name": "Junaid Khan", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320400/320455.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287e44050b68dee38fb6f43"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "hasan-ali-681305", 
+      "cricmetric": "Hasan+Ali", 
+      "name": "Hasan Ali", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320400/320450.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287e4cd50b68dee38fb6f44"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "haris-rauf-1161606", 
+      "cricmetric": "Haris+Rauf", 
+      "name": "Haris Rauf", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322202.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287e69d50b68dee38fb6f45"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "alex-hales-249866", 
+      "cricmetric": "Alex+Hales", 
+      "name": "Alex Hales", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316604.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287e79350b68dee38fb6f46"
+      }, 
+      "country": "Ireland", 
+      "cricinfo_id": "paul-stirling-303427", 
+      "cricmetric": "Paul+Stirling", 
+      "name": "Paul Stirling", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316638.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287e8d750b68dee38fb6f47"
+      }, 
+      "country": "New Zealand", 
+      "cricinfo_id": "colin-munro-232359", 
+      "cricmetric": "Colin+Munro", 
+      "name": "Colin Munro", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/319700/319772.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287e97050b68dee38fb6f48"
+      }, 
+      "country": "South Africa", 
+      "cricinfo_id": "marchant-de-lange-393279", 
+      "cricmetric": "Marchant+De+Lange", 
+      "name": "Marchant de Lange", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322000/322095.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287eaed50b68dee38fb6f49"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "reece-topley-461632", 
+      "cricmetric": "Reece+Topley", 
+      "name": "Reece Topley", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322900/322910.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287ec6750b68dee38fb6f4a"
+      }, 
+      "country": "Afghanistan", 
+      "cricinfo_id": "rahmanullah-gurbaz-974087", 
+      "cricmetric": "Rahmanullah+Gurbaz", 
+      "name": "Rahmanullah Gurbaz", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320500/320504.png", 
+      "role": "Wicket-Keeper Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "6287ed3650b68dee38fb6f4b"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "will-jacks-897549", 
+      "cricmetric": "Will+Jacks", 
+      "name": "Will Jacks", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/324300/324373.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62886d00830d87625e0c9c78"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "liam-dawson-211855", 
+      "cricmetric": "LA+Dawson", 
+      "name": "Liam Dawson", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323100/323109.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "62886dcb830d87625e0c9c79"
+      }, 
+      "country": "Afghanistan", 
+      "cricinfo_id": "mohammad-nabi-25913", 
+      "cricmetric": "Mohammad+Nabi", 
+      "name": "Mohammad Nabi", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316500/316558.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "62886e73830d87625e0c9c7a"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "joe-clarke-571911", 
+      "cricmetric": "Joe+Clarke", 
+      "name": "Joe Clarke", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/324200/324237.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62886f1a830d87625e0c9c7b"
+      }, 
+      "country": "Pakistan", 
+      "cricinfo_id": "sharjeel-khan-227762", 
+      "cricmetric": "Sharjeel+Khan", 
+      "name": "Sharjeel Khan", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322252.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62886fa3830d87625e0c9c7c"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "chris-jordan-288992", 
+      "cricmetric": "Chris+Jordan", 
+      "name": "Chris Jordan", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316623.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "6288702c830d87625e0c9c7d"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "lewis-gregory-362201", 
+      "cricmetric": "Lewis+Gregory", 
+      "name": "Lewis Gregory", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323000/323010.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "628870d3830d87625e0c9c7e"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "tom-abell-462727", 
+      "cricmetric": "Tom+Abell", 
+      "name": "Tom Abell", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/324200/324222.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "62887181830d87625e0c9c7f"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "ian-cockbain-297498", 
+      "cricmetric": "Ian+Cockbain", 
+      "name": "Ian Cockbain", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/324300/324365.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "6288723e830d87625e0c9c80"
+      }, 
+      "country": "West Indies", 
+      "cricinfo_id": "romario-shepherd-677077", 
+      "cricmetric": "Romario+Shepherd", 
+      "name": "Romario Shepherd", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322000/322037.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "62887316830d87625e0c9c81"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "tom-lammonby-902907", 
+      "cricmetric": "Tom+Lammonby", 
+      "name": "Tom Lammonby", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/329700/329739.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "628873f3830d87625e0c9c82"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "jordan-thompson-766809", 
+      "cricmetric": "Jordan+Thompson", 
+      "name": "Jordan Thompson", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/325900/325913.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "62887479830d87625e0c9c83"
+      }, 
+      "country": "Afghanistan", 
+      "cricinfo_id": "rashid-khan-793463", 
+      "cricmetric": "Rashid+Khan", 
+      "name": "Rashid Khan", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320500/320506.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "62887595830d87625e0c9c84"
+      }, 
+      "country": "Namibia", 
+      "cricinfo_id": "david-wiese-221140", 
+      "cricmetric": "David+Wiese", 
+      "name": "David Wiese", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322000/322079.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "6288763a830d87625e0c9c85"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "phil-salt-669365", 
+      "cricmetric": "Phil+Salt", 
+      "name": "Phil Salt", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/324200/324245.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "628876e0830d87625e0c9c86"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "harry-brook-911707", 
+      "cricmetric": "Harry+Brook", 
+      "name": "Harry Brook", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/324200/324246.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62887781830d87625e0c9c87"
+      }, 
+      "country": "South Africa", 
+      "cricinfo_id": "dean-foxcroft-596099", 
+      "cricmetric": "Dean+Foxcroft", 
+      "name": "Dean Foxcroft", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_h_100_2x/lsci/db/PICTURES/CMS/217600/217647.1.jpg", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "62887814830d87625e0c9c88"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "samit-patel-18632", 
+      "cricmetric": "Samit+Patel", 
+      "name": "Samit Patel", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322900/322998.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "628878d0830d87625e0c9c89"
+      }, 
+      "country": "Australia", 
+      "cricinfo_id": "ben-dunk-388678", 
+      "cricmetric": "Ben+Dunk", 
+      "name": "Ben Dunk", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_h_100_2x/lsci/db/PICTURES/CMS/312100/312174.jpg", 
+      "role": "Wicket-Keeper Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62887962830d87625e0c9c8a"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "matthew-potts-1027781", 
+      "cricmetric": "MJ+Potts", 
+      "name": "Matthew Potts", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/325900/325916.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "62887a4f830d87625e0c9c8b"
+      }, 
+      "country": "South Africa", 
+      "cricinfo_id": "rilee-rossouw-318845", 
+      "cricmetric": "Rilee+Rossouw", 
+      "name": "Rilee Rossouw", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316651.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62887add830d87625e0c9c8c"
+      }, 
+      "country": "South Africa", 
+      "cricinfo_id": "imran-tahir-40618", 
+      "cricmetric": "Imran+Tahir", 
+      "name": "Imran Tahir", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316500/316526.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "62887bab830d87625e0c9c8d"
+      }, 
+      "country": "Singapore", 
+      "cricinfo_id": "tim-david-892749", 
+      "cricmetric": "Tim+David", 
+      "name": "Tim David", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_h_100_2x/lsci/db/PICTURES/CMS/313600/313639.1.jpg", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62887d5e830d87625e0c9c8f"
+      }, 
+      "country": "West Indies", 
+      "cricinfo_id": "odean-smith-820691", 
+      "cricmetric": "Odean+Smith", 
+      "name": "Odean Smith", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_h_100_2x/lsci/db/PICTURES/CMS/203900/203935.1.jpg", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "62887e01830d87625e0c9c90"
+      }, 
+      "country": "West Indies", 
+      "cricinfo_id": "rovman-powell-820351", 
+      "cricmetric": "Rovman+Powell", 
+      "name": "Rovman Powell", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322100/322172.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62887e97830d87625e0c9c91"
+      }, 
+      "country": "Zimbabwe", 
+      "cricinfo_id": "blessing-muzarabani-827051", 
+      "cricmetric": "Blessing+Muzarabani", 
+      "name": "Blessing Muzarabani", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/321400/321471.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "62887f15830d87625e0c9c92"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "david-willey-308251", 
+      "cricmetric": "David+Willey", 
+      "name": "David Willey", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322900/322904.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "6288800c830d87625e0c9c93"
+      }, 
+      "country": "West Indies", 
+      "cricinfo_id": "johnson-charles-333066", 
+      "cricmetric": "Johnson+Charles", 
+      "name": "Johnson Charles", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322000/322008.png", 
+      "role": "Wicket-Keeper Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "628880fe830d87625e0c9c94"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "liam-livingstone-403902", 
+      "cricmetric": "Liam+Livingstone", 
+      "name": "Liam Livingstone", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323100/323103.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "628882dd830d87625e0c9c95"
+      }, 
+      "country": "West Indies", 
+      "cricinfo_id": "sherfane-rutherford-914541", 
+      "cricmetric": "Sherfane+Rutherford", 
+      "name": "Sherfane Rutherford", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322100/322173.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "628884f9830d87625e0c9c97"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "saqib-mahmood-643885", 
+      "cricmetric": "Saqib+Mahmood", 
+      "name": "Saqib Mahmood", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323000/323019.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "62888d12830d87625e0c9c98"
+      }, 
+      "country": "Afghanistan", 
+      "cricinfo_id": "hazratullah-zazai-793457", 
+      "cricmetric": "Hazratullah+Zazai", 
+      "name": "Hazratullah Zazai", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320400/320497.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62888df6830d87625e0c9c99"
+      }, 
+      "country": "Australia", 
+      "cricinfo_id": "ben-cutting-2303717", 
+      "cricmetric": "Ben+Cutting", 
+      "name": "Ben Cutting", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/321500/321561.png", 
+      "role": "All-Rounder"
+    }, 
+    {
+      "_id": {
+        "$oid": "62888ee5830d87625e0c9c9a"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "pat-brown-891517", 
+      "cricmetric": "Pat+Brown", 
+      "name": "Pat Brown", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323000/323085.png", 
+      "role": "Bowler"
+    }, 
+    {
+      "_id": {
+        "$oid": "62888f85830d87625e0c9c9b"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "james-vince-296597", 
+      "cricmetric": "James+Vince", 
+      "name": "James Vince", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323000/323001.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62889870830d87625e0c9c9c"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "jason-roy-298438", 
+      "cricmetric": "Jason+Roy", 
+      "name": "Jason Roy", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/319700/319791.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62889927830d87625e0c9c9d"
+      }, 
+      "country": "England", 
+      "cricinfo_id": "will-smeed-1099224", 
+      "cricmetric": "Will+Smeed", 
+      "name": "Will Smeed", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/324200/324230.png", 
+      "role": "Batsman"
+    }, 
+    {
+      "_id": {
+        "$oid": "62889ab3830d87625e0c9c9e"
+      }, 
+      "country": "West Indies", 
+      "cricinfo_id": "shimron-hetmyer-670025", 
+      "cricmetric": "Shimron+Hetmyer", 
+      "name": "Shimron Hetmyer", 
+      "picture": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320100/320116.png", 
+      "role": "Batsman"
+    }
+  ]

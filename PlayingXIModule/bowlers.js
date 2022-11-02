@@ -18,8 +18,8 @@ export default function bowler({ route, navigation }) {
         var noBowlers = countBowlers()
         if(squad.includes(players[index])){
             alert('Player Already in PlayingIX')
-        }else if(noBowlers == 4) {
-            alert('Squad Already has 4 Bowlers')
+        }else if(noBowlers == 3) {
+            alert('Squad Already has 3 Bowlers')
         }else{
             var temp = squad
             temp.push(players[index])

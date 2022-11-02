@@ -1,4 +1,30 @@
-export const player = [
+import { useState, useEffect } from "react"
+import {db} from './firebase-config'
+import {collection, getDocs, addDoc, updateDoc, doc} from 'firebase/firestore'
+
+const collectionRef = collection(db, "players")
+
+export const data = () => {
+  
+  const [players,setPlayers] = useState([])
+  
+   useEffect(()=>{
+    
+    const getPlayers = async () => {
+      const data = await getDocs(collectionRef)
+      setPlayers(data.docs.map((doc) => ({... doc.data(), id:doc.id })))
+    }
+    getPlayers()
+    
+   },[setPlayers])
+
+  // players.map((play)=>{console.log(play.name)})
+
+  return (players)
+}
+
+export const addData = () => {
+  const player = [
     {
       name: 'BABAR AZAM',
       picSource: require('../assets/babarAzam.jpg'),
@@ -168,3 +194,16 @@ export const player = [
       highest: 125,
     },
   ];
+  
+  
+    const StorePlayer = async () =>{
+       await player.map((player)=>{  addDoc(collectionRef,player)
+       })
+    }
+  
+  StorePlayer()
+
+}
+
+
+
