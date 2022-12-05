@@ -190,11 +190,11 @@ export default function PlayingXI({ route, navigation }) {
 
   console.log('started')
   batsmen = players.filter((player) => { return (player.role == 'Batsman') })
-  console.log(batsmen)
+  //console.log(batsmen)
   bowlers = players.filter((player) => { return (player.role == 'Bowler') })
-  console.log(bowlers)
+  //console.log(bowlers)
   allRounders = players.filter((player) => { return (player.role == 'All-Rounder') })
-  console.log(allRounders)
+  //console.log(allRounders)
 
   return (
     <View style={styles.container}>

@@ -16,7 +16,7 @@ import Signup from './UserAccounts/signUp';
 import Login from './UserAccounts/login';
 import Draft from './DraftingScreens/draft';
 
-
+import { Icon } from '@rneui/themed'
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -62,10 +62,23 @@ const FanScreens = () => {
   return (
 
 
-    <Tab.Navigator screenOptions={{ drawerStyle: { backgroundColor: '#ededed' }, drawerActiveBackgroundColor: 'black', drawerActiveTintColor: 'white' }}>
+    <Tab.Navigator screenOptions={{
+       drawerStyle: { backgroundColor: '#ededed' },
+        tabBarActiveTintColor:"green",
+        drawerActiveBackgroundColor: 'black', 
+        drawerActiveTintColor: 'white' }}>
       <Tab.Screen
-        options={{ headerShown: false }}
-        name="Home" component={Home} />
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <Icon name="home" type='font-awesome' size={22} />
+          )
+        }}
+        name="Home" component={Home}
+        
+
+
+      />
       <Tab.Screen
         options={{ headerStyle: { backgroundColor: 'black' }, headerTitleStyle: { color: 'white' } }}
         name="Comparison" component={ComparisonScreens} />
