@@ -43,7 +43,7 @@ export default function Batsmen({ route, navigation }) {
             <ImageBackground source={require('../assets/stadium.jpg')} resizeMode="cover" style={styles.image}>
 
                 <TouchableOpacity
-                    style={{ flex: 1 }}
+                    style={styles.btn}
                     onPress={() => {
                         navigation.navigate({ name: 'playingIX', params: { selectedPlayers: squad } })
                     }}
@@ -117,5 +117,15 @@ const styles = StyleSheet.create({
         height: 150,
         width: 150,
         borderRadius: 10
-    }
+    },
+    btn: {
+        flex: 1,
+        backgroundColor: "#000",
+        padding: 10,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+        marginTop: 25,
+        width: "50%",
+        alignSelf: "center",
+      },
 });
