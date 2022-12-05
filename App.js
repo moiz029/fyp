@@ -63,10 +63,11 @@ const FanScreens = () => {
 
 
     <Tab.Navigator screenOptions={{
-       drawerStyle: { backgroundColor: '#ededed' },
-        tabBarActiveTintColor:"green",
-        drawerActiveBackgroundColor: 'black', 
-        drawerActiveTintColor: 'white' }}>
+      drawerStyle: { backgroundColor: '#ededed' },
+      tabBarActiveTintColor: "green",
+      drawerActiveBackgroundColor: 'black',
+      drawerActiveTintColor: 'white'
+    }}>
       <Tab.Screen
         options={{
           headerShown: false,
@@ -75,7 +76,7 @@ const FanScreens = () => {
           )
         }}
         name="Home" component={Home}
-        
+
 
 
       />
@@ -121,11 +122,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-
+        <Stack.Screen name="FranchiseScreens" component={FranchiseScreens} options={{ headerShown: false }} />
         <Stack.Screen name="FanScreens" component={FanScreens} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="SignUp" component={Signup} options={{ headerShown: false }} />
-        <Stack.Screen name="FranchiseScreens" component={FranchiseScreens} options={{ headerShown: false }} />
 
       </Stack.Navigator>
 

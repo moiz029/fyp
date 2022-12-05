@@ -44,7 +44,7 @@ export default function PlayerStats({ route, navigation }) {
         <Text style={{ flex: 1, color: "white" }}>Loading</Text>
       </View>
     )
-  } else if (stats.Batsman == true) {
+  } else if (stats.Batsman == true && stats.Bowler == false) {
     return (
       <View style={styles.container}>
         <ImageBackground source={require('../assets/stadium.jpg')} resizeMode="cover" style={styles.image}>
@@ -55,6 +55,7 @@ export default function PlayerStats({ route, navigation }) {
             >
               <Image source={{ uri: stats.picture }} style={styles.thumbnail} />
               <Text style={styles.text3}>{stats.name}</Text>
+              <Text style={styles.text2}>Batsman</Text>
 
             </TouchableOpacity>
 
@@ -80,7 +81,7 @@ export default function PlayerStats({ route, navigation }) {
       </View>
     )
   }
-  else if (stats.Bowler == true) {
+  else if (stats.Bowler == true && stats.Batsman == false) {
     return (
       <View style={styles.container}>
         <ImageBackground source={require('../assets/stadium.jpg')} resizeMode="cover" style={styles.image}>
@@ -91,6 +92,7 @@ export default function PlayerStats({ route, navigation }) {
             >
               <Image source={{ uri: stats.picture }} style={styles.thumbnail} />
               <Text style={styles.text3}>{stats.name}</Text>
+              <Text style={styles.text3}>Bowler</Text>
 
             </TouchableOpacity>
 
@@ -111,6 +113,57 @@ export default function PlayerStats({ route, navigation }) {
               <Text style={styles.text2}>Dots: {stats.bowling_dots.toFixed(1)}</Text>
             </View>
 
+          </View>
+        </ImageBackground>
+      </View>
+    )
+  } else {
+    return (
+      <View style={styles.container}>
+        <ImageBackground source={require('../assets/stadium.jpg')} resizeMode="cover" style={styles.image}>
+
+          <View style={{ flex: 2 }}>
+            <TouchableOpacity
+              style={styles.tile2}
+            >
+              <Image source={{ uri: stats.picture }} style={styles.thumbnail} />
+              <Text style={styles.text3}>{stats.name}</Text>
+              <Text style={styles.text2}>All Rounder</Text>
+
+            </TouchableOpacity>
+
+          </View>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-around", }}>
+
+            <View style={{ backgroundColor: '#000000c0', padding: 20, alignItem: "space-between", borderRadius: 15, maxHeight: 200 }}>
+              <Text style={styles.text2}>Matches: {stats.bowling_innings}</Text>
+              <Text style={styles.text2}>Average: {stats.bowling_average.toFixed(1)}</Text>
+              <Text style={styles.text2}>Economy: {(stats.bowling_economy).toFixed(1)}</Text>
+              <Text style={styles.text2}>StrikeRate: {(stats.bowling_sr.toFixed(1))}</Text>
+            </View>
+
+            <View style={{ backgroundColor: '#000000c0', padding: 20, maxHeight: 200, borderRadius: 15 }}>
+              <Text style={styles.text2}>Overs: {stats.bowling_overs}</Text>
+              <Text style={styles.text2}>Runs: {(stats.bowling_runs)}</Text>
+              <Text style={styles.text2}>Wickets: {stats.bowling_wickets}</Text>
+              <Text style={styles.text2}>Dots: {stats.bowling_dots.toFixed(1)}</Text>
+            </View>
+
+          </View>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-around", }}>
+            <View style={{ backgroundColor: '#000000c0', padding: 20, alignItem: "space-between", borderRadius: 15, maxHeight: 200 }}>
+              <Text style={styles.text2}>Runs: {stats.batting_runs}</Text>
+              <Text style={styles.text2}>Innings: {stats.batting_innings}</Text>
+              <Text style={styles.text2}>Average: {(stats.batting_avg).toFixed(1)}</Text>
+              <Text style={styles.text2}>StrikeRate: {(stats.batting_sr.toFixed(1))}</Text>
+            </View>
+
+            <View style={{ backgroundColor: '#000000c0', padding: 20, maxHeight: 200, borderRadius: 15 }}>
+              <Text style={styles.text2}>BallPlayed: {stats.batting_balls}</Text>
+              <Text style={styles.text2}>Dots: {(stats.batting_dots).toFixed(0)}%</Text>
+              <Text style={styles.text2}>4's: {stats.batting_4s}</Text>
+              <Text style={styles.text2}>6's: {stats.batting_6s}</Text>
+            </View>
           </View>
         </ImageBackground>
       </View>
