@@ -66,3 +66,53 @@ def special_contraints(players):
 
             
     return False
+
+
+def validate_new_player_squad(all_players,new_player):
+    platinium, diamond, gold, silver = categories_calculator(all_players)
+    if new_player['category'] == 'Platinium':
+        if platinium>=3:
+            return False
+        else:
+            return True
+    elif new_player['category'] == 'Daimond':
+        if (platinium+diamond)>=6:
+            return False
+        else:
+            return True
+    elif new_player['category'] == 'Gold':
+        if (platinium+diamond+gold)>=9:
+            return False
+        else:
+            return True
+    else:
+        if len(all_players)>=15:
+            return False
+        else:
+            return True
+
+
+def validate_local_foriegner_squad(all_players,new_player):
+    locals, foreignors = foreign_local_calculator(all_players)
+    if new_player["p_type"] == "Local":
+        if locals>11:
+            return False
+    else:
+        if foreignors>4:
+            return False
+    
+    return True
+    
+
+
+def validate_local_foriegner_xi(all_players,new_player):
+    locals, foreignors = foreign_local_calculator(all_players)
+    if new_player["p_type"] == "Local":
+        if locals>=7:
+            return False
+    else:
+        if foreignors>=4:
+            return False
+    
+    return True
+

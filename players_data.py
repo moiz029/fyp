@@ -6,12 +6,12 @@ import pre_processing
 
 #Connection with Database
 try:
-    #mongo = flask_pymongo.MongoClient("mongodb://localhost:27017/")
-    #db = mongo.my_team
+    mongo = flask_pymongo.MongoClient("mongodb://localhost:27017/")
+    db = mongo.my_team
     
 
-    mongo = flask_pymongo.MongoClient("mongodb://my_team:X3Njg1cRrj9QT5Ks@ac-ga3haug-shard-00-00.59spobs.mongodb.net:27017,ac-ga3haug-shard-00-01.59spobs.mongodb.net:27017,ac-ga3haug-shard-00-02.59spobs.mongodb.net:27017/?ssl=true&replicaSet=atlas-ugvkvk-shard-0&authSource=admin&retryWrites=true&w=majority")
-    db = mongo.my_team
+    #mongo = flask_pymongo.MongoClient("mongodb://my_team:X3Njg1cRrj9QT5Ks@ac-ga3haug-shard-00-00.59spobs.mongodb.net:27017,ac-ga3haug-shard-00-01.59spobs.mongodb.net:27017,ac-ga3haug-shard-00-02.59spobs.mongodb.net:27017/?ssl=true&replicaSet=atlas-ugvkvk-shard-0&authSource=admin&retryWrites=true&w=majority")
+    #db = mongo.my_team
     mongo.server_info()
 except:
     print("Error cannot connect to db")
@@ -125,10 +125,10 @@ def add_new_player_info(data):
         return {"message":"Player added successfully"}
 
 
-def fetch_drafting_list(draft_id):
-    draft = db.drafts.find({"draft_id":draft_id})
+def fetch_drafting_list():
+    draft = db.draft.find({})
     try:
-        return parse_json(draft[0])
+        return parse_json(draft)
     except IndexError:
         return False
 
@@ -149,11 +149,11 @@ def get_player_summary(playerid):
 
 
 
-def draft_details(draft_id):
-    players_list = fetch_drafting_list(draft_id)
+def draft_details():
+    players_list = fetch_drafting_list()
     if players_list:
         players = []
-        for player in players_list['players']:
+        for player in players_list:
             players.append(player['players_id'])
         
         players_details = []

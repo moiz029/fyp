@@ -3,6 +3,8 @@ import json
 from bson import json_util
 import uuid
 import players_data
+import league_constraints
+import players_availability
 
 #Connection with Database
 try:
@@ -19,8 +21,9 @@ except:
 
 def signup_new_franchise(franchise_details):
     franchise_details = franchise_details
-    franchise_details["draft"] = players_data.draft_details("draft_22")
+    franchise_details["draft"] = players_data.draft_details()
     franchise_details["team"] = []
+    franchise_details["playing_xi"] = []
     db.franchises.insert_one(franchise_details)
     return True
 
@@ -99,11 +102,88 @@ def select_player(data,session):
     player = data['selected_player']
     franchise = franchise_credentials(session)
 
+    
+    if not league_constraints.validate_new_player_squad(franchise["team"],player):
+        return {'message':"Player from this category can not be picked"}
+
+    if not league_constraints.validate_local_foriegner_squad(franchise["team"],player):
+        return {'message':"Player of this type can not be picked"}
+
     franchise["draft"].remove(player)
     franchise["team"].append(player)
     db.franchises.find_one_and_update({"franchise_id":franchise["franchise_id"]},{'$set':{"draft":franchise["draft"],"team":franchise["team"]}})
 
     return {"message": "Player added to team"}
+
+
+
+def drop_player(data,session):
+    player = data['selected_player']
+    franchise = franchise_credentials(session)
+
+    franchise["draft"].append(player)
+    franchise["team"].remove(player)
+    db.franchises.find_one_and_update({"franchise_id":franchise["franchise_id"]},{'$set':{"draft":franchise["draft"],"team":franchise["team"]}})
+
+    return {"message": "Player dropped from Squad"}
+
+
+def select_playing_xi_player(data,session):
+    player = data['selected_player']
+    franchise = franchise_credentials(session)
+    
+
+    if not league_constraints.validate_local_foriegner_xi(franchise['playing_xi'],player):
+        return {'message':"Player of this type can not be picked"}
+
+    franchise["playing_xi"].append(player)
+    db.franchises.find_one_and_update({"franchise_id":franchise["franchise_id"]},{'$set':{"playing_xi":franchise["playing_xi"]}})
+
+    return {"message": "Player added to team"}
+
+
+
+def drop_playing_xi_player(data,session):
+    player = data['selected_player']
+    franchise = franchise_credentials(session)
+    
+
+    franchise["playing_xi"].remove(player)
+    db.franchises.find_one_and_update({"franchise_id":franchise["franchise_id"]},{'$set':{"playing_xi":franchise["playing_xi"]}})
+
+    return {"message": "Player dropped from playing XI"}
+
+
+def change_availability(data,session):
+    player = data['selected_player']
+    availability = int(data['availability'])
+    previous_availability = player['availability']
+    if previous_availability=='full':
+        previous_availability=13
+    
+    previous_availability = int(previous_availability)
+    player = players_availability.performance_after_partial_availbility(player,availability,previous_availability)
+    player['availability'] = data['availability']
+    franchise = franchise_credentials(session)
+    
+    print(franchise['draft'])
+    franchise["draft"].remove(next(fplayer for fplayer in franchise['draft'] if fplayer["playerid"] == player['playerid']))
+    franchise["draft"].append(player)
+    db.franchises.find_one_and_update({"franchise_id":franchise["franchise_id"]},{'$set':{"draft":franchise["draft"]}})
+
+    return {"message": "Player dropped from playing XI"}
+
+
+
+
+def reject_player(data,session):
+    player = data['selected_player']
+    franchise = franchise_credentials(session)
+
+    franchise["draft"].remove(player)
+    db.franchises.find_one_and_update({"franchise_id":franchise["franchise_id"]},{'$set':{"draft":franchise["draft"]}})
+
+    return {"message": "Player deleted from draft"}
 
 
 

@@ -5,6 +5,7 @@ import players_comparison
 import user_management
 import draft
 import dls_calculator
+import playing_xi
 from flask_cors import CORS
 
 
@@ -150,6 +151,59 @@ def select_player():
     return jsonify({"message":"No such draft exists"})
 
 
+@app.route("/drop_player", methods = ['POST'])
+def drop_player():
+    try:
+        session = request.headers['session_id']
+        data = request.get_json()
+        if user_management.verify_franchise_session(session):
+            draft_players = user_management.drop_player(data,session)
+            if draft_players:
+                return jsonify(draft_players)
+        else:
+            return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
+    
+    return jsonify({"message":"No such draft exists"})
+
+
+
+@app.route("/change_availability", methods = ['POST'])
+def change_availability():
+    try:
+        session = request.headers['session_id']
+        data = request.get_json()
+        if user_management.verify_franchise_session(session):
+            draft_players = user_management.change_availability(data,session)
+            if draft_players:
+                return jsonify(draft_players)
+        else:
+            return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
+
+
+
+
+
+@app.route("/reject_player", methods = ['POST'])
+def reject_player():
+    try:
+        session = request.headers['session_id']
+        data = request.get_json()
+        if user_management.verify_franchise_session(session) or user_management.verify_admin_session(session):
+            draft_players = user_management.reject_player(data,session)
+            if draft_players:
+                return jsonify(draft_players)
+        else:
+            return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
+    
+    return jsonify({"message":"No such draft exists"})
+
+
 
 
 @app.route("/suggest_players", methods = ['POST'])
@@ -157,7 +211,7 @@ def suggest_players():
     try:
         session = request.headers['session_id']
         data = request.get_json()
-        if user_management.verify_franchise_session(session) or user_management.verify_admin_session(session):
+        if user_management.verify_franchise_session(session):
             suggested_players = draft.suggest_players(data)
             return jsonify(suggested_players)
         else:
@@ -165,6 +219,75 @@ def suggest_players():
     except:
         return jsonify({"message":"User not authorized for this request"})
     
+
+
+@app.route("/suggest_player_xi", methods = ['POST'])
+def suggest_player_xi():
+    try:
+        session = request.headers['session_id']
+        data = request.get_json()
+        if user_management.verify_franchise_session(session):
+            suggested_player = playing_xi.suggest_player(data)
+            return jsonify(suggested_player)
+        else:
+            return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
+
+
+
+@app.route("/playing_xi_alternate", methods = ['POST'])
+def playing_xi_alternate():
+    try:
+        session = request.headers['session_id']
+        data = request.get_json()
+        if user_management.verify_franchise_session(session):
+            draft_players = playing_xi.suggest_alternate(data)
+            if draft_players:
+                return jsonify(draft_players)
+        else:
+            return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
+    
+    return jsonify({"message":"No such draft exists"})
+
+
+
+@app.route("/select_playing_xi_player", methods = ['POST'])
+def select_playing_xi_player():
+    try:
+        session = request.headers['session_id']
+        data = request.get_json()
+        if user_management.verify_franchise_session(session):
+            draft_players = user_management.select_playing_xi_player(data,session)
+            if draft_players:
+                return jsonify(draft_players)
+        else:
+            return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
+    
+    return jsonify({"message":"No such draft exists"})
+
+
+
+@app.route("/drop_playing_xi_player", methods = ['POST'])
+def drop_playing_xi_player():
+    try:
+        session = request.headers['session_id']
+        data = request.get_json()
+        if user_management.verify_franchise_session(session):
+            draft_players = user_management.drop_playing_xi_player(data,session)
+            if draft_players:
+                return jsonify(draft_players)
+        else:
+            return jsonify({"message":"User not authorized for this request"})
+    except:
+        return jsonify({"message":"User not authorized for this request"})
+    
+    return jsonify({"message":"No such draft exists"})
+
 
 
 @app.route("/dl_calculator", methods = ['POST'])

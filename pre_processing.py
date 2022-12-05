@@ -9,6 +9,7 @@ def summerize_players(players):
         current_player['playerid'] = player['playerid']
         current_player['name'] = player['playername']
         current_player['picture'] = player['picture']
+        current_player['country'] = player['country']
         if player['stats'][0]:
             batting_stats = player['stats'][0][1:]
         else:
@@ -45,6 +46,7 @@ def add_draft_details_to_players(players,draft_list):
     priced_players = []
     for player in players:
         player['category'],player['price'],player['p_type'] = get_draft_details(player['playerid'],draft_list)
+        player['availability'] = "full"
         priced_players.append(player)
     
     return priced_players
@@ -158,7 +160,7 @@ def handle_missing_values(values_list):
 
 
 def get_draft_details(playerid,draft):
-    players = draft['players']
+    players = draft
     for player in players:
         if player['players_id'] == playerid:
             return player['category'],player['price'],player['p_type']

@@ -2,6 +2,8 @@ from select import select
 from unicodedata import category
 import players_comparison
 import league_constraints
+import user_management
+import external_factors
 import players_data
 import pre_processing
 from sklearn.cluster import KMeans
@@ -901,7 +903,7 @@ def speciality_based_selection(role,speciality, players):
     organized_data = []
     single_player = []
     if role!="Bowler" and speciality=="Consistency":
-        organized_data.append([43])
+        organized_data.append([40])
         for i in players:
             single_player.append(i["batting_avg"])
             organized_data.append(single_player)
@@ -909,7 +911,7 @@ def speciality_based_selection(role,speciality, players):
 
         return clustering(organized_data)
     elif role!="Bowler" and speciality=="Power-Hitting":
-        organized_data.append([140,3])
+        organized_data.append([147,3])
         for i in players:
             single_player = []
             
@@ -922,19 +924,20 @@ def speciality_based_selection(role,speciality, players):
     
     elif (role=="Bowler" or role=="All-Rounder") and speciality=="Economical":
         
-        organized_data.append([80,3])
+        organized_data.append([50,4,90])
         for i in players:
             single_player = []
             
             single_player.append(i["bowling_dots"])
             single_player.append(i["bowling_economy"])
+            single_player.append(i["bowling_sr"])
             organized_data.append(single_player)
             single_player = []
 
         return clustering(organized_data)
 
-    elif (role=="Bolwer" or role=="All-Rounder") and speciality=="Wicket-Taking":
-        organized_data.append([3,15])
+    elif (role=="Bowler" or role=="All-Rounder") and speciality=="Wicket-Taking":
+        organized_data.append([2,15])
         for i in players:
             single_player = []
             
@@ -952,11 +955,22 @@ def suggest_players(data):
     category = data["category"]
     p_type = data["p_type"]
     role = data["role"]
+    venues = data["venues"]
+    position = data["position"]
     player_speciality = data["speciality"]
 
     valid_players = category_selection(category,draft_players)
     valid_players = player_type_selection(p_type,valid_players)
     valid_players = role_filtering(role,valid_players)
+    if venues!="Any":
+        venue_players = external_factors.venue_filtering(valid_players,venues)
+        valid_players = external_factors.venue_stats_impact(valid_players,venue_players)
+    
+    if position!="Any":
+        valid_players = external_factors.positional_factor_adding(valid_players,position)
+
+    specialized_list=[]
+
     specialized_list = speciality_based_selection(role,player_speciality,valid_players)
     suggest_players = []
 

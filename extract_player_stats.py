@@ -279,22 +279,21 @@ def combining_bowling(league,international):
     stats.append(float(int(balls/6) + .1*(balls%6)))
     stats.append(float(league[3].replace(",",""))+float(international[3].replace(",","")))
     stats.append(float(league[4].replace(",",""))+float(international[4].replace(",","")))
-    stats.append(float(stats[3]/balls))
+    stats.append(float(stats[3]/stats[2]))
     if stats[4] == 0:
         stats.append("-")
     else:
         stats.append(float(stats[3]/stats[4]))
-    if stats[4] == 0:
+    if stats[2] == 0:
         stats.append("-")
     else:
-        stats.append(float(stats[3]/balls))
+        stats.append(float(stats[3]/balls)*100)
     stats.append(float(league[8].replace(",",""))+float(international[8].replace(",","")))
     stats.append(float(league[10].replace(",",""))+float(international[10].replace(",","")))
     stats.append(float(league[11].replace(",",""))+float(international[11].replace(",","")))
     stats.append((((float(league[-1].replace(",",""))*float(league[2].replace(",","")))+(float(international[-1].replace(",",""))*float(international[2].replace(",","")))))/(float(league[2].replace(",",""))+float(international[2].replace(",",""))))
 
     return stats
-
 
 def number_of_matches(id):
     webpage = requests.get("http://www.cricmetric.com/playerstats.py?player="+id+"&role=all&format=TWENTY20&groupby=match")
