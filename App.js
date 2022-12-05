@@ -98,6 +98,7 @@ const Accounts = () => {
 };
 const FanScreens = () => {
   return (
+
     <Tab.Navigator
       screenOptions={{
         drawerStyle: { backgroundColor: "#ededed" },
@@ -106,6 +107,7 @@ const FanScreens = () => {
         drawerActiveTintColor: "white",
       }}
     >
+
       <Tab.Screen
         options={{
           headerShown: false,
@@ -113,8 +115,10 @@ const FanScreens = () => {
             <Icon name="home" type="font-awesome" color={color} size={22} />
           ),
         }}
+
         name="Home"
         component={Home}
+
       />
       <Tab.Screen
         options={{
@@ -247,6 +251,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+
         <Stack.Screen
           name="FranchiseScreens"
           component={FranchiseScreens}
@@ -267,6 +272,7 @@ export default function App() {
           component={Signup}
           options={{ headerShown: false }}
         />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
