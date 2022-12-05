@@ -1,195 +1,252 @@
-import React from 'react';
-import { StyleSheet, Text, View, ImageBackground, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
-import { Picker } from '@react-native-picker/picker';
-import { data, addData } from '../DataBase/api';
+import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
+import { useState } from "react";
+import { Picker } from "@react-native-picker/picker";
+import { data, addData } from "../DataBase/api";
 //import {data, addData} from '../DataBase/data'
-import { set } from 'react-native-reanimated';
-
+import { set } from "react-native-reanimated";
 
 export default function Selection({ route, navigation }) {
-  const players = data()
+  const players = data();
 
-  var player1 = {}
-  var player2 = {}
-  var [selectedCountry, setSelectedCountry] = useState('Country')
-  var [selectedType, setSelectedType] = useState('Type')
-  var [selectedPlayer1, setSelectedPlayer1] = useState({})
-  var [selectedPlayer2, setSelectedPlayer2] = useState({})
+  var player1 = {};
+  var player2 = {};
+  var [selectedCountry, setSelectedCountry] = useState("Country");
+  var [selectedType, setSelectedType] = useState("Type");
+  var [selectedPlayer1, setSelectedPlayer1] = useState({});
+  var [selectedPlayer2, setSelectedPlayer2] = useState({});
 
-  var types = ['Type']
+  var types = ["Type"];
   players.map((player) => {
-    if (!types.includes(player.role))
-      types.push(player.role)
-  })
+    if (!types.includes(player.role)) types.push(player.role);
+  });
 
-  var countries = ['Country']
+  var countries = ["Country"];
   players.map((player) => {
-    if (!countries.includes(player.country))
-      countries.push(player.country)
-  })
-
+    if (!countries.includes(player.country)) countries.push(player.country);
+  });
 
   return (
     <View style={styles.container}>
+      <ImageBackground
+        source={require("../assets/stadium.jpg")}
+        resizeMode="cover"
+        style={styles.image}
+      >
 
-      <ImageBackground source={require('../assets/stadium.jpg')} resizeMode="cover" style={styles.image}>
-
-
-
-        <View style={{ flexDirection: 'row', marginBottom: 90, flex: 1 }}>
-          <View style={{ justifyContent: 'center', alignSelf: 'center', marginHorizontal: 5, flex: 1 }}>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "column", flex: 1 }}>
+            <Text style={styles.text1}>Player 1</Text>
+            
+            <View
+          >
             <Picker
-              style={{ height: 30, justifyContent: 'center', backgroundColor: '#ff8182c0' }}
+              style={styles.picker}
               selectedValue={selectedCountry}
-              onValueChange={(selected) => { setSelectedCountry(selected) }}
+              onValueChange={(selected) => {
+                setSelectedCountry(selected);
+              }}
+              dropdownIconColor={"white"}
             >
               {countries.map((item, index) => {
-
-                return (
-                  <Picker.Item label={item} value={item} key={index} />
-                )
-              })
-              }
-
+                return <Picker.Item label={item} value={item} key={index} />;
+              })}
             </Picker>
-
           </View>
-          <View style={{ justifyContent: 'center', alignSelf: 'center', flex: 1 }}>
+          <View
+          >
             <Picker
-              style={{ height: 30, justifyContent: 'center', backgroundColor: '#ff8182c0' }}
+              style={styles.picker}
               selectedValue={selectedType}
-              onValueChange={(selected) => { setSelectedType(selected) }}
-
+              onValueChange={(selected) => {
+                setSelectedType(selected);
+              }}
+              dropdownIconColor={"white"}
             >
               {types.map((item, index) => {
-
-                return (
-                  <Picker.Item label={item} value={item} key={index} />
-                )
-              })
-              }
-
+                return <Picker.Item label={item} value={item} key={index} />;
+              })}
             </Picker>
+          </View>
+
+            <View>
+              <Picker
+                style={styles.picker}
+                selectedValue={selectedPlayer1}
+                onValueChange={(selected) => {
+                  player1 = selected;
+                  //setSelectedPlayer1(selected)
+                }}
+                dropdownIconColor={"white"}
+              >
+                {players.map((item, index) => {
+                  if (selectedCountry == "Country" && selectedType == "Type") {
+                    return (
+                      <Picker.Item label={item.name} value={item} key={index} />
+                    );
+                  } else if (
+                    selectedCountry == "Country" &&
+                    item.role == selectedType
+                  ) {
+                    return (
+                      <Picker.Item label={item.name} value={item} key={index} />
+                    );
+                  } else if (
+                    item.country == selectedCountry &&
+                    selectedType == "Type"
+                  ) {
+                    return (
+                      <Picker.Item label={item.name} value={item} key={index} />
+                    );
+                  } else if (
+                    item.country == selectedCountry &&
+                    item.role == selectedType
+                  ) {
+                    return (
+                      <Picker.Item label={item.name} value={item} key={index} />
+                    );
+                  }
+                })}
+              </Picker>
+            </View>
+          </View>
+          <View style={{ flexDirection: "column", flex: 1 }}>
+
+            <Text style={styles.text1}>Player 2</Text>
+            <View
+          >
+            <Picker
+              style={styles.picker}
+              selectedValue={selectedCountry}
+              onValueChange={(selected) => {
+                setSelectedCountry(selected);
+              }}
+              dropdownIconColor={"white"}
+            >
+              {countries.map((item, index) => {
+                return <Picker.Item label={item} value={item} key={index} />;
+              })}
+            </Picker>
+          </View>
+
+          <View
+          >
+            <Picker
+              style={styles.picker}
+              selectedValue={selectedType}
+              onValueChange={(selected) => {
+                setSelectedType(selected);
+              }}
+              dropdownIconColor={"white"}
+            >
+              {types.map((item, index) => {
+                return <Picker.Item label={item} value={item} key={index} />;
+              })}
+            </Picker>
+          </View>
+            <View>
+              <Picker
+                style={styles.picker}
+                selectedValue={selectedPlayer2}
+                onValueChange={(selected) => {
+                  //setSelectedPlayer2(selected)
+                  player2 = selected;
+                }}
+                dropdownIconColor={"white"}
+              >
+                {players.map((item, index) => {
+                  if (selectedCountry == "Country" && selectedType == "Type") {
+                    return (
+                      <Picker.Item label={item.name} value={item} key={index} />
+                    );
+                  } else if (
+                    selectedCountry == "Country" &&
+                    item.role == selectedType
+                  ) {
+                    return (
+                      <Picker.Item label={item.name} value={item} key={index} />
+                    );
+                  } else if (
+                    item.country == selectedCountry &&
+                    selectedType == "Type"
+                  ) {
+                    return (
+                      <Picker.Item label={item.name} value={item} key={index} />
+                    );
+                  } else if (
+                    item.country == selectedCountry &&
+                    item.role == selectedType
+                  ) {
+                    return (
+                      <Picker.Item label={item.name} value={item} key={index} />
+                    );
+                  }
+                })}
+              </Picker>
+            </View>
           </View>
         </View>
 
-        <Text style={styles.text}>Player 1</Text>
-
-
-        <View style={{ justifyContent: 'center', alignSelf: 'center', marginBottom: 30, flex: 2 }}>
-          <Picker
-            style={{ height: 40, width: 250, justifyContent: 'center', backgroundColor: '#ff8182c0' }}
-            selectedValue={selectedPlayer1}
-            onValueChange={(selected) => {
-              player1 = selected
-              //setSelectedPlayer1(selected)
-            }}
-
-          >
-            {players.map((item, index) => {
-              if (selectedCountry == 'Country' && selectedType == 'Type') {
-                return (
-                  <Picker.Item label={item.name} value={item} key={index} />
-                )
-              }
-              else if (selectedCountry == 'Country' && item.role == selectedType) {
-                return (
-                  <Picker.Item label={item.name} value={item} key={index} />
-                )
-              }
-              else if (item.country == selectedCountry && selectedType == 'Type') {
-                return (
-                  <Picker.Item label={item.name} value={item} key={index} />
-                )
-              }
-              else if (item.country == selectedCountry && item.role == selectedType) {
-                return (
-                  <Picker.Item label={item.name} value={item} key={index} />
-                )
-              }
-            })}
-
-          </Picker>
-        </View>
-
-        <Text style={styles.text2}>Player 2</Text>
-
-
-        <View style={{ justifyContent: 'center', alignSelf: 'center', flex: 2 }}>
-          <Picker
-            style={{ height: 40, width: 250, justifyContent: 'center', backgroundColor: '#5bcffac0' }}
-            selectedValue={selectedPlayer2}
-            onValueChange={(selected) => {
-              //setSelectedPlayer2(selected)
-              player2 = selected
-            }}
-
-          >
-            {players.map((item, index) => {
-              if (selectedCountry == 'Country' && selectedType == 'Type') {
-                return (
-                  <Picker.Item label={item.name} value={item} key={index} />
-                )
-              }
-              else if (selectedCountry == 'Country' && item.role == selectedType) {
-                return (
-                  <Picker.Item label={item.name} value={item} key={index} />
-                )
-              }
-              else if (item.country == selectedCountry && selectedType == 'Type') {
-                return (
-                  <Picker.Item label={item.name} value={item} key={index} />
-                )
-              }
-              else if (item.country == selectedCountry && item.role == selectedType) {
-                return (
-                  <Picker.Item label={item.name} value={item} key={index} />
-                )
-              }
-            })}
-
-          </Picker>
-        </View>
-        <View style={{ marginBottom: 10 }}>
+        <View style={{ marginBottom: 10, marginTop: 30 }}>
           <TouchableOpacity
+            style={styles.btn}
             onPress={() => {
-              console.log(player1)
-              navigation.navigate('Compare', { player1, player2 })
+              console.log(player1);
+              navigation.navigate("Compare", { player1, player2 });
             }}
           >
             <Text style={styles.text}>Compare</Text>
           </TouchableOpacity>
         </View>
-
       </ImageBackground>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
 
+  btn: {
+    marginLeft: 10,
+    backgroundColor: "#000",
+    padding: 15,
+    paddingHorizontal: 30,
+    borderRadius: 5,
+    marginTop: 25,
+    width: "50%",
+    alignSelf: "center",
+  },
   image: {
     flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   text: {
-    color: "#ff8182c0",
-    fontSize: 21,
-    lineHeight: 42,
-    fontWeight: "bold",
+    color: "white",
+    fontSize: 15,
     textAlign: "center",
-    backgroundColor: "#000000c0"
   },
-  text2: {
-    color: "#5bcffac0",
-    fontSize: 21,
-    lineHeight: 42,
-    fontWeight: "bold",
+
+  text1: {
+    color: "white",
+    fontSize: 20,
     textAlign: "center",
-    backgroundColor: "#000000c0"
-  }
+    marginBottom:10,
+    fontWeight:"bold"
+  },
+
+  picker: {
+    backgroundColor: "#006050c0",
+    justifyContent: "center",
+    color: "#fff",
+    marginBottom: 10,
+    marginHorizontal: 10,
+  },
 });

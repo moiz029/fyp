@@ -1,9 +1,17 @@
-import { StyleSheet, Text, View, TouchableOpacity, ImageBackground, FlatList, Image } from 'react-native';
-import { useState, useEffect } from 'react';
-import { data, addData } from '../DataBase/api';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ImageBackground,
+  FlatList,
+  Image,
+} from "react-native";
+import { useState, useEffect } from "react";
+import { data, addData } from "../DataBase/api";
 
 export default function PlayingXI({ route, navigation }) {
-  const players = data()
+  const players = data();
   // const [players, setPlayers] = useState([
   //   {
   //     name: 'BABAR AZAM',
@@ -177,49 +185,78 @@ export default function PlayingXI({ route, navigation }) {
 
   useEffect(() => {
     if (route.params?.selectedPlayers) {
-      console.log('sent succesfully.')
+      console.log("sent succesfully.");
     }
-  }, [route.params?.selectedPlayers])
+  }, [route.params?.selectedPlayers]);
 
-  var batsmen = []
-  var bowlers = []
-  var allRounders = []
+  var batsmen = [];
+  var bowlers = [];
+  var allRounders = [];
 
-  var selectedPlayers = route.params?.selectedPlayers
-  selectedPlayers = (selectedPlayers == undefined) ? [] : (route.params?.selectedPlayers)
+  var selectedPlayers = route.params?.selectedPlayers;
+  selectedPlayers =
+    selectedPlayers == undefined ? [] : route.params?.selectedPlayers;
 
-  console.log('started')
-  batsmen = players.filter((player) => { return (player.role == 'Batsman') })
+  console.log("started");
+  batsmen = players.filter((player) => {
+    return player.role == "Batsman";
+  });
   //console.log(batsmen)
-  bowlers = players.filter((player) => { return (player.role == 'Bowler') })
+  bowlers = players.filter((player) => {
+    return player.role == "Bowler";
+  });
   //console.log(bowlers)
-  allRounders = players.filter((player) => { return (player.role == 'All-Rounder') })
+  allRounders = players.filter((player) => {
+    return player.role == "All-Rounder";
+  });
   //console.log(allRounders)
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../assets/stadium.jpg')} resizeMode="cover" style={styles.image}>
-
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-          <TouchableOpacity style={styles.tile2}
-            onPress={() => { navigation.navigate('Batsmen', { batsmen, selectedPlayers }) }}
+      <ImageBackground
+        source={require("../assets/stadium.jpg")}
+        resizeMode="cover"
+        style={styles.image}
+      >
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <TouchableOpacity
+            style={styles.tile2}
+            onPress={() => {
+              navigation.navigate("Batsmen", { batsmen, selectedPlayers });
+            }}
           >
-            <Image source={require('../assets/batsman.png')} style={styles.thumbnail2} />
+            <Image
+              source={require("../assets/cricket-player.png")}
+              style={styles.thumbnail2}
+            />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.tile2}
-            onPress={() => { navigation.navigate('AllRounder', { allRounders, selectedPlayers }) }}
+          <TouchableOpacity
+            style={styles.tile2}
+            onPress={() => {
+              navigation.navigate("AllRounder", {
+                allRounders,
+                selectedPlayers,
+              });
+            }}
           >
-            <Image source={require('../assets/allRounder.png')} style={styles.thumbnail2} />
+            <Image
+              source={require("../assets/cricket.png")}
+              style={styles.thumbnail2}
+            />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.tile2}
-            onPress={() => { navigation.navigate('Bowler', { bowlers, selectedPlayers }) }}
+          <TouchableOpacity
+            style={styles.tile2}
+            onPress={() => {
+              navigation.navigate("Bowler", { bowlers, selectedPlayers });
+            }}
           >
-            <Image source={require('../assets/bowler.png')} style={styles.thumbnail2} />
+            <Image
+              source={require("../assets/cricket-ball.png")}
+              style={styles.thumbnail2}
+            />
           </TouchableOpacity>
-
-
         </View>
 
         <View style={{ flex: 6, alignItems: "center" }}>
@@ -230,67 +267,68 @@ export default function PlayingXI({ route, navigation }) {
             renderItem={({ item }) => (
               <View>
                 <TouchableOpacity style={styles.tile}>
-                  <Image source={{ uri: item.picture }} style={styles.thumbnail} />
+                  <Image
+                    source={{ uri: item.picture }}
+                    style={styles.thumbnail}
+                  />
                   <Text style={styles.text}>{item.name}</Text>
                 </TouchableOpacity>
               </View>
-
             )}
           />
         </View>
-
       </ImageBackground>
     </View>
-  )
+  );
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
 
   image: {
     flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   text: {
     color: "white",
     fontSize: 21,
     lineHeight: 42,
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
+
   tile: {
-    backgroundColor: '#000000c0',
+    backgroundColor: "#006050c0",
     margin: 10,
     height: 240,
     width: 168,
     borderRadius: 20,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   tile2: {
     margin: 10,
     height: 80,
     borderRadius: 20,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 40,
   },
   thumbnail: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     height: 140,
     width: 140,
-    borderRadius: 10
+    borderRadius: 10,
   },
   thumbnail2: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     height: 70,
     width: 70,
-    borderRadius: 10
+    borderRadius: 10,
   },
-
-
 });

@@ -22,11 +22,11 @@ export default function AllPlayers({ route, navigation }) {
                 <View style={{ flex: 1, alignItems: "center" }}>
 
                     <TextInput style={styles.input1}
-                        placeholder='Search'
+                        placeholder='Search ...'
                         onChangeText={(text) => {
                             setSearch(text)
                         }}
-                        placeholderTextColor={"white"}
+                        placeholderTextColor={"#AEAEAE"}
                     />
                     <FlatList
                         numColumns={2}
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     tile: {
-        backgroundColor: '#000000c0',
+        backgroundColor: "#006050c0",
         margin: 10,
         height: 240,
         width: 168,
@@ -105,15 +105,15 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     input1: {
-        borderBottomWidth: 1,
-        borderColor: 'white',
-        color: "white",
-        paddingBottom: 5,
-        marginBottom: 20,
+
+        color: "#000",
+        marginBottom: 30,
         fontSize: 20,
-        backgroundColor: "Black",
-        width: 200,
-        marginTop: 20
+        width: "90%",
+        marginTop: 20,
+        backgroundColor:"#f5f5f5",
+        borderRadius:4,
+        padding:10
     }
 
 
