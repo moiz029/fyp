@@ -61,8 +61,8 @@ def summarized_player_comparison(player1, player2):
         stats.append(["Batting Dots", player_1["batting_dots"], player_2["batting_dots"]])
         stats.append(["Batting Innings", player_1["batting_innings"], player_2["batting_innings"]])
         stats.append(["Batting SR", player_1["batting_sr"], player_2["batting_sr"]])
-        stats.append(["Country", player_1["country"], player_2["country"]])
-        stats.append(["Name", player_1["name"], player_2["name"]])
+        # stats.append(["Country", player_1["country"], player_2["country"]])
+        # stats.append(["Name", player_1["name"], player_2["name"]])
 
     elif player_1["Bowler"] and player_2["Bowler"]:
         stats.append(["Bowling 4s", player_1["bowling_4s"], player_2["bowling_4s"]])
@@ -75,8 +75,8 @@ def summarized_player_comparison(player1, player2):
         stats.append(["Bowling Runs", player_1["bowling_runs"], player_2["bowling_runs"]])
         stats.append(["Bowling SR", player_1["bowling_sr"], player_2["bowling_sr"]])
         stats.append(["Bowling Wickets", player_1["bowling_wickets"], player_2["bowling_wickets"]])
-        stats.append(["Country", player_1["country"], player_2["country"]])
-        stats.append(["Name", player_1["name"], player_2["name"]])
+        # stats.append(["Country", player_1["country"], player_2["country"]])
+        # stats.append(["Name", player_1["name"], player_2["name"]])
     else:
         stats.append(["Invalid Selection", "none", "none"])
 
@@ -284,9 +284,9 @@ def suggest_players():
             suggested_players = draft.suggest_players(data)
             return jsonify(suggested_players)
         else:
-            return jsonify({"message": "User not authorized for this request"})
-    except:
-        return jsonify({"message": "User not authorized for this request"})
+            return jsonify({"message": "session id error"})
+    except Exception:
+        return jsonify({"message": "other rola"})
 
 
 @app.route("/suggest_player_xi", methods=['POST'])
@@ -446,4 +446,4 @@ def drafting_player():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host = '0.0.0.0')
