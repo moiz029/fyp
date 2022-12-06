@@ -15,8 +15,11 @@ import PlayerStats from "./PlayingXIModule/playersStats";
 import Signup from "./UserAccounts/signUp";
 import Login from "./UserAccounts/login";
 import Draft from "./DraftingScreens/draft";
+import Roster from "./DraftingScreens/roster";
+import {Session} from "./Context/SessionContext"
 
 import { Icon } from "@rneui/themed";
+import { useState, useContext } from "react";
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -235,31 +238,35 @@ const FranchiseScreens = () => {
       />
       <Tab.Screen
         options={{
-          headerShown: false,
+          headerShown: true,
           tabBarIcon: ({ color }) => (
-            <Icon name="user" type="font-awesome" color={color} size={22} />
+            <Icon name="group" type="font-awesome" color={color} size={22} />
           ),
         }}
-        name="Account"
-        component={Accounts}
+        name="Squad"
+        component={Roster}
       />
     </Tab.Navigator>
   );
 };
 
 export default function App() {
+  const [session,setSession] = useState('')
+  const [draft,setDraft] = useState([])
   return (
-    <NavigationContainer>
+    <Session.Provider value={{session,setSession,draft,setDraft}}>
+      <NavigationContainer>
       <Stack.Navigator>
 
-        <Stack.Screen
-          name="FranchiseScreens"
-          component={FranchiseScreens}
-          options={{ headerShown: false }}
-        />
+        
         <Stack.Screen
           name="FanScreens"
           component={FanScreens}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FranchiseScreens"
+          component={FranchiseScreens}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -275,5 +282,7 @@ export default function App() {
 
       </Stack.Navigator>
     </NavigationContainer>
+    </Session.Provider>
+    
   );
 }

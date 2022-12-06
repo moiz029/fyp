@@ -7,209 +7,49 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import { useState, useEffect } from "react";
-import { data, addData } from "../DataBase/api";
+import { useState, useEffect, useContext } from "react";
+import { Session } from "../Context/SessionContext";
 
 export default function PlayingXI({ route, navigation }) {
-  const players = data();
-  // const [players, setPlayers] = useState([
-  //   {
-  //     name: 'BABAR AZAM',
-  //     picSource: require('../assets/babarAzam.jpg'),
-  //     type: 'Batsman',
-  //     country: 'Pakistan',
-  //     innings: 80,
-  //     iccRanking: 1,
-  //     runs: 3300,
-  //     avg: 48.5,
-  //     strikeRate: 100.5,
-  //     hundreds: 5,
-  //     fifties: 12,
-  //     highest: 125,
-  //   },
-  //   {
-  //     name: 'BEN STOKES',
-  //     picSource: require('../assets/benStokes.jpg'),
-  //     type: 'AllRounder',
-  //     country: 'England',
-  //     innings: 80,
-  //     iccRanking: 1,
-  //     runs: 3300,
-  //     avg: 48.5,
-  //     strikeRate: 100.5,
-  //     hundreds: 5,
-  //     fifties: 12,
-  //     highest: 125,
-  //   },
-  //   {
-  //     name: 'GLENN MAXWELL',
-  //     picSource: require('../assets/glennMaxwell.jpg'),
-  //     type: 'Batsman',
-  //     country: 'Australia',
-  //     innings: 80,
-  //     iccRanking: 1,
-  //     runs: 3300,
-  //     avg: 48.5,
-  //     strikeRate: 100.5,
-  //     hundreds: 5,
-  //     fifties: 12,
-  //     highest: 125,
-  //   },
-  //   {
-  //     name: 'GLENN PHILLIPS',
-  //     picSource: require('../assets/glennPhillips.jpg'),
-  //     type: 'Batsman',
-  //     country: 'NewZealand',
-  //     innings: 80,
-  //     iccRanking: 1,
-  //     runs: 3300,
-  //     avg: 48.5,
-  //     strikeRate: 100.5,
-  //     hundreds: 5,
-  //     fifties: 12,
-  //     highest: 125,
-  //   },
-  //   {
-  //     name: 'HARSHAL PATEL',
-  //     picSource: require('../assets/harshalPatel.jpg'),
-  //     type: 'Bowler',
-  //     country: 'India',
-  //     innings: 80,
-  //     iccRanking: 1,
-  //     runs: 3300,
-  //     avg: 48.5,
-  //     strikeRate: 100.5,
-  //     hundreds: 5,
-  //     fifties: 12,
-  //     highest: 125,
-  //   },
-  //   {
-  //     name: 'LIAM LIVINGSTONE',
-  //     picSource: require('../assets/liamLivingstone.jpg'),
-  //     type: 'AllRounder',
-  //     country: 'England',
-  //     innings: 80,
-  //     iccRanking: 1,
-  //     runs: 3300,
-  //     avg: 48.5,
-  //     strikeRate: 100.5,
-  //     hundreds: 5,
-  //     fifties: 12,
-  //     highest: 125,
-  //   },
-  //   {
-  //     name: 'MUHAMMAD RIZWAN',
-  //     picSource: require('../assets/m.rizwan.jpg'),
-  //     type: 'Batsman',
-  //     country: 'Pakistan',
-  //     innings: 80,
-  //     iccRanking: 1,
-  //     runs: 3300,
-  //     avg: 48.5,
-  //     strikeRate: 100.5,
-  //     hundreds: 5,
-  //     fifties: 12,
-  //     highest: 125,
-  //   },
-  //   {
-  //     name: 'MOEEN ALI',
-  //     picSource: require('../assets/moeenAli.jpg'),
-  //     type: 'AllRounder',
-  //     country: 'England',
-  //     innings: 80,
-  //     iccRanking: 1,
-  //     runs: 3300,
-  //     avg: 48.5,
-  //     strikeRate: 100.5,
-  //     hundreds: 5,
-  //     fifties: 12,
-  //     highest: 125,
-  //   },
-  //   {
-  //     name: 'MUSTAFIZUR RAHMAN',
-  //     picSource: require('../assets/mustafizurRahman.jpg'),
-  //     type: 'Batsman',
-  //     country: 'Bangladesh',
-  //     innings: 80,
-  //     iccRanking: 1,
-  //     runs: 3300,
-  //     avg: 48.5,
-  //     strikeRate: 100.5,
-  //     hundreds: 5,
-  //     fifties: 12,
-  //     highest: 125,
-  //   },
-  //   {
-  //     name: 'RASHID KHAN',
-  //     picSource: require('../assets/rashidKhan.jpg'),
-  //     type: 'Bowler',
-  //     country: 'Afghanistan',
-  //     innings: 80,
-  //     iccRanking: 1,
-  //     runs: 3300,
-  //     avg: 48.5,
-  //     strikeRate: 100.5,
-  //     hundreds: 5,
-  //     fifties: 12,
-  //     highest: 125,
-  //   },
-  //   {
-  //     name: 'SHAHEEN AFRIDI',
-  //     picSource: require('../assets/shaheenAfridi.jpg'),
-  //     type: 'Bowler',
-  //     country: 'Pakistan',
-  //     innings: 80,
-  //     iccRanking: 1,
-  //     runs: 3300,
-  //     avg: 48.5,
-  //     strikeRate: 100.5,
-  //     hundreds: 5,
-  //     fifties: 12,
-  //     highest: 125,
-  //   },
-  //   {
-  //     name: 'WAINDU HASARANGA',
-  //     picSource: require('../assets/waninduHasaranga.jpg'),
-  //     type: 'Bowler',
-  //     country: 'SriLanka',
-  //     innings: 80,
-  //     iccRanking: 1,
-  //     runs: 3300,
-  //     avg: 48.5,
-  //     strikeRate: 100.5,
-  //     hundreds: 5,
-  //     fifties: 12,
-  //     highest: 125,
-  //   },
-  // ])
+  const [players, setPlayers] = useState([])
+  const [playingXI, setPlaingXI] = useState([])
+  const { session } = useContext(Session)
 
-  useEffect(() => {
-    if (route.params?.selectedPlayers) {
-      console.log("sent succesfully.");
-    }
-  }, [route.params?.selectedPlayers]);
+  const getPlayingXI = () => {
+    fetch(`http://192.168.18.53:5000/verify_franchise/${session}`, {
+      method: "GET",
+    })
+      .then(response => response.json())
+      .then(json => {
+        //console.log(json.team)
+        setPlayers(json.team)
+        setPlaingXI(json.playing_xi)
+      })
+      .catch(err => console.log(err))
+  }
+  
+
 
   var batsmen = [];
   var bowlers = [];
   var allRounders = [];
 
   var selectedPlayers = route.params?.selectedPlayers;
-  selectedPlayers =
-    selectedPlayers == undefined ? [] : route.params?.selectedPlayers;
+  selectedPlayers = selectedPlayers == undefined ? [] : route.params?.selectedPlayers;
 
   console.log("started");
   batsmen = players.filter((player) => {
-    return player.role == "Batsman";
+    return player.Batsman == true && player.Bowler == false;
   });
-  //console.log(batsmen)
+  console.log(batsmen)
   bowlers = players.filter((player) => {
-    return player.role == "Bowler";
+    return player.Bowler == true && player.Batsman == false;
   });
   //console.log(bowlers)
   allRounders = players.filter((player) => {
-    return player.role == "All-Rounder";
+    return player.Batsman == true && player.Bowler == true;
   });
-  //console.log(allRounders)
+  console.log(allRounders)
 
   return (
     <View style={styles.container}>
@@ -259,11 +99,17 @@ export default function PlayingXI({ route, navigation }) {
           </TouchableOpacity>
         </View>
 
-        <View style={{ flex: 6, alignItems: "center" }}>
+        <View style={{ flex: 6, alignItems: "center", marginTop: 50 }}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={()=>{getPlayingXI()}}
+        >
+          <Text style={styles.text}>Refresh</Text>
+        </TouchableOpacity>
           <FlatList
             numColumns={2}
             style={{}}
-            data={selectedPlayers}
+            data={playingXI}
             renderItem={({ item }) => (
               <View>
                 <TouchableOpacity style={styles.tile}>
@@ -292,8 +138,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    fontSize: 21,
-    lineHeight: 42,
+    fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
   },

@@ -86,7 +86,7 @@ export default function PlayerStats({ route, navigation }) {
       <View style={styles.container}>
         <ImageBackground source={require('../assets/stadium.jpg')} resizeMode="cover" style={styles.image}>
 
-          <View style={{ flex: 2 }}>
+          <View >
             <TouchableOpacity
               style={styles.tile2}
             >
@@ -99,14 +99,14 @@ export default function PlayerStats({ route, navigation }) {
           </View>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-around", }}>
 
-            <View style={{ backgroundColor: '#000000c0', padding: 20, alignItem: "space-between", borderRadius: 15, maxHeight: 200 }}>
+            <View style={{ backgroundColor: '#000000c0', padding: 20, alignItem: "space-between", borderRadius: 15 }}>
               <Text style={styles.text2}>Matches: {stats.bowling_innings}</Text>
               <Text style={styles.text2}>Average: {stats.bowling_average.toFixed(1)}</Text>
               <Text style={styles.text2}>Economy: {(stats.bowling_economy).toFixed(1)}</Text>
               <Text style={styles.text2}>StrikeRate: {(stats.bowling_sr.toFixed(1))}</Text>
             </View>
 
-            <View style={{ backgroundColor: '#000000c0', padding: 20, maxHeight: 200, borderRadius: 15 }}>
+            <View style={{ backgroundColor: '#000000c0', padding: 20, borderRadius: 15 }}>
               <Text style={styles.text2}>Overs: {stats.bowling_overs}</Text>
               <Text style={styles.text2}>Runs: {(stats.bowling_runs)}</Text>
               <Text style={styles.text2}>Wickets: {stats.bowling_wickets}</Text>
@@ -135,14 +135,14 @@ export default function PlayerStats({ route, navigation }) {
           </View>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-around", }}>
 
-            <View style={{ backgroundColor: '#000000c0', padding: 20, alignItem: "space-between", borderRadius: 15, maxHeight: 200 }}>
+            <View style={{ backgroundColor: '#000000c0', padding: 20, alignItem: "space-between", borderRadius: 15 }}>
               <Text style={styles.text2}>Matches: {stats.bowling_innings}</Text>
               <Text style={styles.text2}>Average: {stats.bowling_average.toFixed(1)}</Text>
               <Text style={styles.text2}>Economy: {(stats.bowling_economy).toFixed(1)}</Text>
               <Text style={styles.text2}>StrikeRate: {(stats.bowling_sr.toFixed(1))}</Text>
             </View>
 
-            <View style={{ backgroundColor: '#000000c0', padding: 20, maxHeight: 200, borderRadius: 15 }}>
+            <View style={{ backgroundColor: '#000000c0', padding: 20, borderRadius: 15 }}>
               <Text style={styles.text2}>Overs: {stats.bowling_overs}</Text>
               <Text style={styles.text2}>Runs: {(stats.bowling_runs)}</Text>
               <Text style={styles.text2}>Wickets: {stats.bowling_wickets}</Text>
@@ -151,14 +151,14 @@ export default function PlayerStats({ route, navigation }) {
 
           </View>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-around", }}>
-            <View style={{ backgroundColor: '#000000c0', padding: 20, alignItem: "space-between", borderRadius: 15, maxHeight: 200 }}>
+            <View style={{ backgroundColor: '#000000c0', padding: 20, alignItem: "space-between", borderRadius: 15 }}>
               <Text style={styles.text2}>Runs: {stats.batting_runs}</Text>
               <Text style={styles.text2}>Innings: {stats.batting_innings}</Text>
               <Text style={styles.text2}>Average: {(stats.batting_avg).toFixed(1)}</Text>
               <Text style={styles.text2}>StrikeRate: {(stats.batting_sr.toFixed(1))}</Text>
             </View>
 
-            <View style={{ backgroundColor: '#000000c0', padding: 20, maxHeight: 200, borderRadius: 15 }}>
+            <View style={{ backgroundColor: '#000000c0', padding: 20, borderRadius: 15 }}>
               <Text style={styles.text2}>BallPlayed: {stats.batting_balls}</Text>
               <Text style={styles.text2}>Dots: {(stats.batting_dots).toFixed(0)}%</Text>
               <Text style={styles.text2}>4's: {stats.batting_4s}</Text>
@@ -179,21 +179,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center"
   },
-  text: {
-    color: "#ff6363c0",
-    fontSize: 21,
-    lineHeight: 42,
-    fontWeight: "bold",
-    textAlign: "center",
-    backgroundColor: "#000000c0"
-  },
+
   text2: {
     color: "white",
-    fontSize: 21,
+    fontSize: 18,
     lineHeight: 42,
-    fontWeight: "bold",
     //textAlign: "center",
-    fontStyle: 'italic'
   },
   text3: {
     color: "white",
@@ -201,46 +192,22 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center"
   },
-  tile: {
-    backgroundColor: '#d9ed92c0',
-    alignItems: 'center',
-    margin: 2,
-    height: 40,
-    borderRadius: 20,
-    flex: 3
-  },
-  tilep1: {
-    backgroundColor: '#ff8182c0',
-    alignItems: 'center',
-    margin: 2,
-    height: 40,
-    borderRadius: 20,
-    flex: 1
-  },
-  tilep2: {
-    backgroundColor: '#5bcffac0',
-    alignItems: 'center',
-    margin: 2,
-    height: 40,
-    borderRadius: 20,
-    flex: 1
-  },
+
   tile2: {
-    backgroundColor: '#000000c0',
+    backgroundColor: "#006050c0",
     margin: 10,
-    height: 200,
-    width: 400,
     borderRadius: 20,
-    flex: 1,
+    paddingVertical:30,
     justifyContent: 'center',
     alignItems: 'center'
   },
+
   thumbnail: {
-    justifyContent: 'center',
     alignItems: 'center',
-    height: 300,
-    width: 300,
-    borderRadius: 10
+    height: 200,
+    width: 200,
+    borderRadius: 10,
+    marginBottom:30
   },
 
 

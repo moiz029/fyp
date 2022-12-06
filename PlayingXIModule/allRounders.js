@@ -7,41 +7,75 @@ import {
   FlatList,
   Image,
 } from "react-native";
+import { Session } from '../Context/SessionContext';
+import { useContext } from 'react';
 
 export default function AllRounder({ route, navigation }) {
   var players = route.params.allRounders;
-  var squad = route.params.selectedPlayers;
 
-  const countAllRounders = () => {
-    var count = 0;
-    squad.forEach((player) => {
-      if (player.type == "AllRounder") count += 1;
-    });
-    return count;
+  // const countAllRounders = () => {
+  //   var count = 0;
+  //   squad.forEach((player) => {
+  //     if (player.type == "AllRounder") count += 1;
+  //   });
+  //   return count;
+  // };
+
+  // const addToSquad = (index) => {
+  //   var noAllRounders = countAllRounders();
+  //   if (squad.includes(players[index])) {
+  //     alert("Player Already in PlayingIX");
+  //   } else if (noAllRounders == 2) {
+  //     alert("Squad Already has 2 AllRounders");
+  //   } else {
+  //     var temp = squad;
+  //     temp.push(players[index]);
+  //     squad = temp;
+  //     alert("Player Added to PlayingIX");
+  //     console.log(squad);
+  //   }
+  // };
+
+  // const removeFromSquad = (index) => {
+  //   if (squad.includes(players[index])) {
+  //     squad.splice(squad.indexOf(players[index]), 1);
+  //     alert("Player Removed from PlayingIX");
+  //   } else {
+  //     alert("Player Not in PlayingIX");
+  //   }
+  // };
+  const { session } = useContext(Session)
+
+  const addPlayer = (item) => {
+
+    // console.log(obj)
+    fetch("http://192.168.18.53:5000/select_playing_xi_player", {
+      method: "POST",
+      body: JSON.stringify({ selected_player: item }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        "session_id": session
+      }
+    })
+      .then(response => response.json())
+      .then(json => console.log(json))
+      .catch(err => console.log(err))
   };
 
-  const addToSquad = (index) => {
-    var noAllRounders = countAllRounders();
-    if (squad.includes(players[index])) {
-      alert("Player Already in PlayingIX");
-    } else if (noAllRounders == 2) {
-      alert("Squad Already has 2 AllRounders");
-    } else {
-      var temp = squad;
-      temp.push(players[index]);
-      squad = temp;
-      alert("Player Added to PlayingIX");
-      console.log(squad);
-    }
-  };
+  const dropPlayer = (item) => {
 
-  const removeFromSquad = (index) => {
-    if (squad.includes(players[index])) {
-      squad.splice(squad.indexOf(players[index]), 1);
-      alert("Player Removed from PlayingIX");
-    } else {
-      alert("Player Not in PlayingIX");
-    }
+    // console.log(obj)
+    fetch("http://192.168.18.53:5000/drop_playing_xi_player", {
+      method: "POST",
+      body: JSON.stringify({ selected_player: item }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        "session_id": session
+      }
+    })
+      .then(response => response.json())
+      .then(json => console.log(json))
+      .catch(err => console.log(err))
   };
 
   return (
@@ -54,13 +88,10 @@ export default function AllRounder({ route, navigation }) {
         <TouchableOpacity
           style={styles.btn}
           onPress={() => {
-            navigation.navigate({
-              name: "playingIX",
-              params: { selectedPlayers: squad },
-            });
+            navigation.navigate({ name: 'playingIX' })
           }}
         >
-          <Text style={styles.text}>Confirm Changes</Text>
+          <Text style={styles.text}>View Playing XI</Text>
         </TouchableOpacity>
 
         <View style={{ flex: 10 }}>
@@ -92,16 +123,15 @@ export default function AllRounder({ route, navigation }) {
                       }}
                     >
                       <TouchableOpacity
-                        onPress={() => {
-                          addToSquad(players.indexOf(item));
-                        }}
+                        style={styles.btn}
+
+                        onPress={() => { addPlayer(item) }}
                       >
                         <Text style={styles.text}>ADD</Text>
                       </TouchableOpacity>
                       <TouchableOpacity
-                        onPress={() => {
-                          removeFromSquad(players.indexOf(item));
-                        }}
+                        style={styles.btn}
+                        onPress={() => { dropPlayer(item) }}
                       >
                         <Text style={styles.text}>Remove</Text>
                       </TouchableOpacity>
@@ -127,13 +157,14 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    fontSize: 21,
+    fontSize: 16,
     lineHeight: 42,
     fontWeight: "bold",
     textAlign: "center",
   },
   tile: {
-    backgroundColor: "#000000c0",
+    backgroundColor: "#006050c0",
+
     margin: 10,
     height: 250,
     borderRadius: 20,
@@ -149,13 +180,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   btn: {
-    flex: 1,
+
     backgroundColor: "#000",
-    padding: 10,
+    padding: 4,
     paddingHorizontal: 20,
     borderRadius: 5,
     marginTop: 25,
-    width: "50%",
+
     alignSelf: "center",
   },
 });

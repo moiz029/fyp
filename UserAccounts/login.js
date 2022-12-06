@@ -7,16 +7,19 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { color } from "react-native-reanimated";
 import {
   TextInput,
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
+import { Session } from "../Context/SessionContext";
+import { Alert } from "react-native-web";
 
 export default function Login({ route, navigation }) {
-  var [email, setEmail] = useState("");
-  var [password, setPassword] = useState("");
+  var [email, setEmail] = useState("M@gmail.com");
+  var [password, setPassword] = useState("abc");
+  const { session, setSession,setDraft } = useContext(Session)
 
   const loginAccount = () => {
     var accDetails = {
@@ -33,9 +36,13 @@ export default function Login({ route, navigation }) {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        if (result.message != "Error in signing in franchise") {
+        setSession(result.session_id)
+        setDraft(result.draft)
+        //console.log(session)
+        if (result.message !== "Error in signing up franchise") {
           navigation.navigate("FranchiseScreens");
         } else {
+          alert("Error signing in")
         }
       })
       .catch((error) => console.log("error", error));
@@ -108,7 +115,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 5,
     marginBottom: 25,
-    marginTop:25,
+    marginTop: 25,
 
   },
 

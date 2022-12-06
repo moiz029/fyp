@@ -19,6 +19,8 @@ export default function Selection({ route, navigation }) {
   var player2 = {};
   var [selectedCountry, setSelectedCountry] = useState("Country");
   var [selectedType, setSelectedType] = useState("Type");
+  var [selectedCountry2, setSelectedCountry2] = useState("Country");
+  var [selectedType2, setSelectedType2] = useState("Type");
   var [selectedPlayer1, setSelectedPlayer1] = useState({});
   var [selectedPlayer2, setSelectedPlayer2] = useState({});
 
@@ -43,37 +45,37 @@ export default function Selection({ route, navigation }) {
         <View style={{ flexDirection: "row" }}>
           <View style={{ flexDirection: "column", flex: 1 }}>
             <Text style={styles.text1}>Player 1</Text>
-            
+
             <View
-          >
-            <Picker
-              style={styles.picker}
-              selectedValue={selectedCountry}
-              onValueChange={(selected) => {
-                setSelectedCountry(selected);
-              }}
-              dropdownIconColor={"white"}
             >
-              {countries.map((item, index) => {
-                return <Picker.Item label={item} value={item} key={index} />;
-              })}
-            </Picker>
-          </View>
-          <View
-          >
-            <Picker
-              style={styles.picker}
-              selectedValue={selectedType}
-              onValueChange={(selected) => {
-                setSelectedType(selected);
-              }}
-              dropdownIconColor={"white"}
+              <Picker
+                style={styles.picker}
+                selectedValue={selectedCountry}
+                onValueChange={(selected) => {
+                  setSelectedCountry(selected);
+                }}
+                dropdownIconColor={"white"}
+              >
+                {countries.map((item, index) => {
+                  return <Picker.Item label={item} value={item} key={index} />;
+                })}
+              </Picker>
+            </View>
+            <View
             >
-              {types.map((item, index) => {
-                return <Picker.Item label={item} value={item} key={index} />;
-              })}
-            </Picker>
-          </View>
+              <Picker
+                style={styles.picker}
+                selectedValue={selectedType}
+                onValueChange={(selected) => {
+                  setSelectedType(selected);
+                }}
+                dropdownIconColor={"white"}
+              >
+                {types.map((item, index) => {
+                  return <Picker.Item label={item} value={item} key={index} />;
+                })}
+              </Picker>
+            </View>
 
             <View>
               <Picker
@@ -120,36 +122,36 @@ export default function Selection({ route, navigation }) {
 
             <Text style={styles.text1}>Player 2</Text>
             <View
-          >
-            <Picker
-              style={styles.picker}
-              selectedValue={selectedCountry}
-              onValueChange={(selected) => {
-                setSelectedCountry(selected);
-              }}
-              dropdownIconColor={"white"}
             >
-              {countries.map((item, index) => {
-                return <Picker.Item label={item} value={item} key={index} />;
-              })}
-            </Picker>
-          </View>
+              <Picker
+                style={styles.picker}
+                selectedValue={selectedCountry2}
+                onValueChange={(selected) => {
+                  setSelectedCountry2(selected);
+                }}
+                dropdownIconColor={"white"}
+              >
+                {countries.map((item, index) => {
+                  return <Picker.Item label={item} value={item} key={index} />;
+                })}
+              </Picker>
+            </View>
 
-          <View
-          >
-            <Picker
-              style={styles.picker}
-              selectedValue={selectedType}
-              onValueChange={(selected) => {
-                setSelectedType(selected);
-              }}
-              dropdownIconColor={"white"}
+            <View
             >
-              {types.map((item, index) => {
-                return <Picker.Item label={item} value={item} key={index} />;
-              })}
-            </Picker>
-          </View>
+              <Picker
+                style={styles.picker}
+                selectedValue={selectedType2}
+                onValueChange={(selected) => {
+                  setSelectedType2(selected);
+                }}
+                dropdownIconColor={"white"}
+              >
+                {types.map((item, index) => {
+                  return <Picker.Item label={item} value={item} key={index} />;
+                })}
+              </Picker>
+            </View>
             <View>
               <Picker
                 style={styles.picker}
@@ -161,27 +163,27 @@ export default function Selection({ route, navigation }) {
                 dropdownIconColor={"white"}
               >
                 {players.map((item, index) => {
-                  if (selectedCountry == "Country" && selectedType == "Type") {
+                  if (selectedCountry2 == "Country" && selectedType2 == "Type") {
                     return (
                       <Picker.Item label={item.name} value={item} key={index} />
                     );
                   } else if (
-                    selectedCountry == "Country" &&
-                    item.role == selectedType
+                    selectedCountry2 == "Country" &&
+                    item.role == selectedType2
                   ) {
                     return (
                       <Picker.Item label={item.name} value={item} key={index} />
                     );
                   } else if (
-                    item.country == selectedCountry &&
-                    selectedType == "Type"
+                    item.country == selectedCountry2 &&
+                    selectedType2 == "Type"
                   ) {
                     return (
                       <Picker.Item label={item.name} value={item} key={index} />
                     );
                   } else if (
-                    item.country == selectedCountry &&
-                    item.role == selectedType
+                    item.country == selectedCountry2 &&
+                    item.role == selectedType2
                   ) {
                     return (
                       <Picker.Item label={item.name} value={item} key={index} />
@@ -238,8 +240,8 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 20,
     textAlign: "center",
-    marginBottom:10,
-    fontWeight:"bold"
+    marginBottom: 10,
+    fontWeight: "bold"
   },
 
   picker: {

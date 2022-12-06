@@ -1,24 +1,36 @@
 import { StyleSheet, Text, View, TouchableOpacity, ImageBackground, FlatList, Image, TextInput } from 'react-native';
-import InfiniteScroll from "react-infinite-scroller";
-import { useState, useEffect } from 'react';
-import { data, addData } from '../DataBase/api';
+import { useState, useEffect, useContext } from 'react';
+import { Session } from '../Context/SessionContext';
 
 
-
-export default function AllPlayers({ route, navigation }) {
+export default function Roster({ route, navigation }) {
     var result = []
-    const players = data()
     var [search, setSearch] = useState('');
-
-    result = players.filter((player) => { return ((player.name).includes(search)) })
-
-    
-
+    const [players, setPlayers] = useState([])
+    const { session } = useContext(Session)
+    // result = players.filter((player) => { return ((player.name).includes(search)) })
+    useEffect(() => {
+        getRoster()
+    })
+    const getRoster = () => {
+        fetch(`http://192.168.18.53:5000/verify_franchise/${session}`, {
+            method: "GET",
+        })
+            .then(response => response.json())
+            .then(json => {
+                // console.log(json.team)
+                setPlayers(json.team)
+            })
+            .catch(err => console.log(err))
+    }
 
     return (
         <View style={styles.container}>
             <ImageBackground source={require('../assets/stadium.jpg')} resizeMode="cover" style={styles.image}>
+
+
                 <View style={{ flex: 1, alignItems: "center" }}>
+
                     <TextInput style={styles.input1}
                         placeholder='Search ...'
                         onChangeText={(text) => {
@@ -28,16 +40,13 @@ export default function AllPlayers({ route, navigation }) {
                     />
                     <FlatList
                         numColumns={2}
-                        style={{}}
-                        data={result}
+                        data={players}
                         keyExtractor={item => item.name}
                         renderItem={({ item }) => (
                             <View>
                                 <TouchableOpacity
                                     style={styles.tile}
-                                    onPress={() => {
-                                        navigation.navigate('PlayerStats', { item })
-                                    }}
+                                    disabled
                                 >
                                     <Image source={{ uri: item.picture }} style={styles.thumbnail} />
                                     <Text style={styles.text}>{item.name}</Text>
@@ -107,9 +116,9 @@ const styles = StyleSheet.create({
         fontSize: 20,
         width: "90%",
         marginTop: 20,
-        backgroundColor:"#f5f5f5",
-        borderRadius:4,
-        padding:10
+        backgroundColor: "#f5f5f5",
+        borderRadius: 4,
+        padding: 10
     }
 
 

@@ -5,53 +5,7 @@ var p1Stats = []
 var p2Stats = []
 export default function Compare({ route, navigation }) {
 
-    const test = [
-        [
-            "Batting 4s",
-            359,
-            986
-        ],
-        [
-            "Batting 6s",
-            107,
-            369
-        ],
-        [
-            "Batting Average",
-            47.31395348837209,
-            39.14509803921569
-        ],
-        [
-            "Batting Balls",
-            3193,
-            7074
-        ],
-        [
-            "Batting Dots",
-            41.2405172413793,
-            45.69152542372881
-        ],
-        [
-            "Batting Innings",
-            116,
-            295
-        ],
-        [
-            "Batting SR",
-            127.43501409332916,
-            141.10828385637546
-        ],
-        [
-            "Country",
-            "Pakistan",
-            "Australia"
-        ],
-        [
-            "Name",
-            "Muhammad Rizwan",
-            "David Warner"
-        ]
-    ]
+
     var player1 = route.params.player1
     var player2 = route.params.player2
     // var p1Stats = route.params.p1Stats
@@ -59,20 +13,45 @@ export default function Compare({ route, navigation }) {
 
     const [p1Stats, setp1Stats] = useState();
     const [p2Stats, setp2Stats] = useState();
+    const [compStats, setcompStats] = useState([]);
+    const [check, setCheck] = useState(false);
+    const [check2, setCheck2] = useState(false);
 
-    const [check, setCheck] = useState(true);
-    
-    const getPlayer2 = async () => {
+    const getComparison = async () => {
 
-        fetch('http://192.168.18.53:5000/get_player_summary/' + player2.cricmetric)
+        fetch('http://192.168.18.53:5000/summarized_player_comparison/' + player1.cricmetric + '/' + player2.cricmetric)
             .then((res) => {
-                console.log('Player2 api called');
+                console.log('Comparison api called');
+                return res.json()
+            })
+            .then((res) => {
+                console.log('p1 part1');
+                setcompStats(res)
+                console.log('comppppppppp' + res)
+
+                setCheck(true)
+            })
+            .catch((err) => {
+                console.log('Error: ', err);
+                console.error(err);
+            })
+    }
+    const getHeadtoHead = async () => {
+        if(player1.role == "Bowler"){
+            var temp = player1
+            player1 = player2
+            player2 = temp
+        }
+        fetch('http://192.168.18.53:5000/summarized-head-to-head/' + player1.cricmetric + '/' + player2.cricmetric)
+            .then((res) => {
+                console.log('head to head api called');
                 return res.json()
             })
             .then((res) => {
                 console.log('p2 part2');
-                setp1Stats(res)
-                
+                setcompStats(res)
+                console.log('compaaaaaaaa' + res["Avg"])
+
                 setCheck(true)
             })
             .catch((err) => {
@@ -82,28 +61,16 @@ export default function Compare({ route, navigation }) {
     }
 
 
-    const getPlayer1 = async () => {
-        console.log('player1.crickmetric', player1.cricmetric);
-        fetch('http://192.168.18.53:5000/get_player_summary/' + player1.cricmetric)
-            .then((res) => {
-                console.log('Player1 api called');
-                return res.json()
-            })
-            .then((res) => {
-                console.log('p1 part2');
-                setp2Stats(res)
-                
-                getPlayer2()
-            })
-            .catch((err) => {
-                console.log('Error: ', err);
-                console.error(err);
-            })
-    }
+
 
 
     if (check == false) {
-        getPlayer1()
+        if (player1.role == player2.role) {
+            getComparison()
+        }
+        else {
+            getHeadtoHead()
+        }
     }
 
 
@@ -113,7 +80,7 @@ export default function Compare({ route, navigation }) {
                 <Text style={{ flex: 1, backgroundColor: "white" }}>Loading</Text>
             </View>
         )
-    } else {
+    } else if (player1.role == player2.role) {
         return (
             <View style={styles.container}>
                 <ImageBackground source={require('../assets/stadium.jpg')} resizeMode="cover" style={styles.image}>
@@ -121,12 +88,12 @@ export default function Compare({ route, navigation }) {
 
                     <View style={{ flexDirection: 'row', margin: 10 }}>
 
-                        <TouchableOpacity style={styles.tile2}>
+                        <TouchableOpacity style={styles.tile3} disabled>
                             <Image source={{ uri: player1.picture }} style={styles.thumbnail} />
                             <Text style={styles.text3}>{player1.name}</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.tile2}>
+                        <TouchableOpacity style={styles.tile3} disabled>
                             <Image source={{ uri: player2.picture }} style={styles.thumbnail} />
                             <Text style={styles.text3}>{player2.name}</Text>
                         </TouchableOpacity>
@@ -137,12 +104,12 @@ export default function Compare({ route, navigation }) {
                     <View>
                         <FlatList
                             style={{}}
-                            data={test}
+                            data={compStats}
                             renderItem={({ item }) => (
                                 <View style={{ flexDirection: 'row' }}>
 
                                     <TouchableOpacity style={styles.tilep1}>
-                                        <Text style={styles.text2}>{item[1]}</Text>
+                                        <Text style={styles.text2}>{item[1].toFixed(0)}</Text>
                                     </TouchableOpacity>
 
                                     <TouchableOpacity style={styles.tile}>
@@ -150,12 +117,141 @@ export default function Compare({ route, navigation }) {
                                     </TouchableOpacity>
 
                                     <TouchableOpacity style={styles.tilep2}>
-                                        <Text style={styles.text2}>{item[2]}</Text>
+                                        <Text style={styles.text2}>{item[2].toFixed(0)}</Text>
                                     </TouchableOpacity>
 
                                 </View>
                             )}
                         />
+
+                    </View>
+
+                </ImageBackground>
+
+            </View>
+        )
+    } else {
+        return (
+            <View style={styles.container}>
+                <ImageBackground source={require('../assets/stadium.jpg')} resizeMode="cover" style={styles.image}>
+
+
+                    <View style={{ flexDirection: 'row', margin: 10 }}>
+
+                        <TouchableOpacity style={styles.tile3} disabled>
+                            <Image source={{ uri: player1.picture }} style={styles.thumbnail} />
+                            <Text style={styles.text3}>{player1.name}</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.tile3} disabled>
+                            <Image source={{ uri: player2.picture }} style={styles.thumbnail} />
+                            <Text style={styles.text3}>{player2.name}</Text>
+                        </TouchableOpacity>
+
+                    </View>
+
+
+                    <View>
+                        <View style={{ flexDirection: 'row' }}>
+
+                            <TouchableOpacity style={styles.tile}>
+                                <Text style={styles.text2}>Total Matches</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.tilep1}>
+                                <Text style={styles.text2}>{compStats["total_matches"]}</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
+
+                            <TouchableOpacity style={styles.tile}>
+                                <Text style={styles.text2}>Balls</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.tilep1}>
+                                <Text style={styles.text2}>{compStats["Balls"]}</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
+
+                            <TouchableOpacity style={styles.tile}>
+                                <Text style={styles.text2}>Runs</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.tilep1}>
+                                <Text style={styles.text2}>{compStats["Runs"]}</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
+
+                            <TouchableOpacity style={styles.tile}>
+                                <Text style={styles.text2}>Dismissals</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.tilep1}>
+                                <Text style={styles.text2}>{compStats["Outs"]}</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
+
+                            <TouchableOpacity style={styles.tile}>
+                                <Text style={styles.text2}>Average</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.tilep1}>
+                                <Text style={styles.text2}>{compStats["Avg"]}</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
+
+                            <TouchableOpacity style={styles.tile}>
+                                <Text style={styles.text2}>Strike Rate</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.tilep1}>
+                                <Text style={styles.text2}>{compStats["SR"]}</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
+
+                            <TouchableOpacity style={styles.tile}>
+                                <Text style={styles.text2}>4's</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.tilep1}>
+                                <Text style={styles.text2}>{compStats["4s"]}</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
+
+                            <TouchableOpacity style={styles.tile}>
+                                <Text style={styles.text2}>6's</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.tilep1}>
+                                <Text style={styles.text2}>{compStats["6s"]}</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
+
+                            <TouchableOpacity style={styles.tile}>
+                                <Text style={styles.text2}>Dots</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.tilep1}>
+                                <Text style={styles.text2}>{compStats["Dots"]}</Text>
+                            </TouchableOpacity>
+
+                        </View>
+
 
                     </View>
 
@@ -196,7 +292,8 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     tile: {
-        backgroundColor: '#d9ed92c0',
+        backgroundColor: "#006050c0",
+
         alignItems: 'center',
         margin: 2,
         height: 40,
@@ -204,7 +301,7 @@ const styles = StyleSheet.create({
         flex: 3
     },
     tilep1: {
-        backgroundColor: '#ff8182c0',
+        backgroundColor: '#000000c0',
         alignItems: 'center',
         margin: 2,
         height: 40,
@@ -212,7 +309,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     tilep2: {
-        backgroundColor: '#5bcffac0',
+        backgroundColor: '#000000c0',
+
         alignItems: 'center',
         margin: 2,
         height: 40,
@@ -221,6 +319,16 @@ const styles = StyleSheet.create({
     },
     tile2: {
         backgroundColor: '#000000c0',
+        margin: 10,
+        height: 200,
+        width: 250,
+        borderRadius: 20,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    tile3: {
+        backgroundColor: "#006050c0",
         margin: 10,
         height: 200,
         width: 250,

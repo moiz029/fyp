@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import { useState, useEffect } from "react";
-import { data, addData } from "./DataBase/data";
+import { data, addData } from "./DataBase/api";
 import { Icon } from "@rneui/themed";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -44,7 +44,7 @@ export default function Home({ route, navigation }) {
               reverseColor
             />
 
-            <Text style={{ color: "#fff",paddingRight: 15, paddingLeft:5 }}>{status ? "Logout" : "Login"}</Text>
+            <Text style={{ color: "#fff", paddingRight: 15, paddingLeft: 5 }}>{status ? "Logout" : "Login"}</Text>
           </TouchableOpacity>
         </View>
         <View
